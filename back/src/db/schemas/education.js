@@ -3,6 +3,12 @@ import { Schema, model } from "mongoose";
 const EducationSchema = new Schema(
   {
     id: {
+      // type: Schema.Types.ObjectId,
+      // ref: "User",
+      type: String,
+      required: true,
+    },
+    edu_id: {
       type: String,
       required: true,
     },
@@ -17,7 +23,7 @@ const EducationSchema = new Schema(
     degree: {
       type: String,
       required: true,
-    }
+    },
   },
   {
     timestamps: true,

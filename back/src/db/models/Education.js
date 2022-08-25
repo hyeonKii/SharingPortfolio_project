@@ -11,13 +11,18 @@ class Education {
     return education;
   }
 
-  static async findById({ user_id }) {
-    const user = await EducationModel.findOne({ id: user_id });
-    return user;
+  static async findById({ education_id }) {
+    const edu = await EducationModel.findOne({ edu_id: education_id });
+    return edu;
   }
 
-  static async update({ user_id, fieldToUpdate, newValue }) {
-    const filter = { id: user_id };
+  static async findByUserId({ user_id }) {
+    const edu = await EducationModel.find({ id: user_id });
+    return edu;
+  }
+
+  static async update({ education_id, fieldToUpdate, newValue }) {
+    const filter = { edu_id: education_id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
@@ -30,4 +35,4 @@ class Education {
   }
 }
 
-export { Education }
+export { Education };

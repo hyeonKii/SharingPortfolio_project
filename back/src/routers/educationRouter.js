@@ -5,61 +5,77 @@ import { eduService } from "../services/eduService";
 
 const educationRouter = Router();
 
-educationRouter.post("/", login_required, async function (req, res, next) {
-  try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-    // req (request) 에서 데이터 가져오기
-    const school = req.body.school;
-    const major = req.body.major;
-    const degree = req.body.degree;
+educationRouter.post(
+  "/users/:id/edu/add",
+  login_required,
+  async function (req, res, next) {
+    try {
+      if (is.emptyObject(req.body)) {
+        throw new Error(
+          "headers의 Content-Type을 application/json으로 설정해주세요"
+        );
+      }
+      // req (request) 에서 데이터 가져오기
+      const school = req.body.school;
+      const major = req.body.major;
+      const degree = req.body.degree;
 
-    const newEdu = await eduService.addEdu({
-      school,
-      major,
-      degree
-    })
-    res.status(201).json(newEdu);
-  } catch (error) {
-    next(error);
+      const newEdu = await eduService.addEdu({
+        id: req.params.id,
+        school,
+        major,
+        degree,
+      });
+      res.status(201).json(newEdu);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // 등록된 Education 정보 수정하기
-educationRouter.put("/users/:id", login_required, async function(req, res, next) {
-  try {
-    //URI로부터 사용자 id 추출
-    const user_id = req.params.id;
-    // body data로부터 업데이트할 Education 정보 추출
-    const school = req.body.school ?? null;
-    const major = req.body.major ?? null;
-    const degree = req.body.degree ?? null;
+educationRouter.put(
+  "/users/:id/edu/:edu_id/update",
+  login_required,
+  async function (req, res, next) {
+    try {
+      //URI로부터 edu id 추출
+      const education_id = req.params.edu_id;
+      // body data로부터 업데이트할 Education 정보 추출
+      const school = req.body.school ?? null;
+      const major = req.body.major ?? null;
+      const degree = req.body.degree ?? null;
 
-    const toUpdate = { school, major, degree };
+      const toUpdate = { school, major, degree };
 
-    //해당 사용자 아이디로 Education 정보를 db에서 찾아 업데이트함. 
-    const updateEdu = await eduService.setEdu({user_id, toUpdate});
+      //해당 사용자 아이디로 Education 정보를 db에서 찾아 업데이트함.
+      const updatedEdu = await eduService.setEdu({ education_id, toUpdate });
 
-    res.status(200).json(updateEdu);
-  } catch (error) {
-    next (error);
+      if (updatedEdu.errorMessage) {
+        throw new Error(updatedEdu.errorMessage);
+      }
+
+      res.status(200).json(updatedEdu);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // 현재 사용자의 Education 정보 가져오기
-educationRouter.get("/users/:id", login_required, async function(req, res, next) {
-  try {
-    const user_id = req.params.id;
-    const currentEduInfo = await eduService.getEduInfo({ user_id });
+educationRouter.get(
+  "/users/:id/edu",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.id;
+      const currentEduInfo = await eduService.getEduInfo({ user_id });
 
-    res.status(200).send(currentEduInfo);
-  } catch (error) {
-    next(error);
+      res.status(200).send(currentEduInfo);
+    } catch (error) {
+      next(error);
+    }
   }
-});
-
+);
 
 export { educationRouter };
