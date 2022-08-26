@@ -2,11 +2,19 @@ import { Schema, model } from "mongoose";
 
 const AwardSchema = new Schema(
   {
-    title: {
+    id: {
       type: String,
       required: true,
     },
-    content: {
+    award_id: {
+      type: String,
+      require: true,
+    },
+    awardTitle: {
+      type: String,
+      required: true,
+    },
+    awardDetail: {
       type: String,
       required: true,
     },
