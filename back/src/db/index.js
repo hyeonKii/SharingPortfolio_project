@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "./models/User";
 import { Education } from "./models/Education";
+import { Certificate } from "./models/Certificate";
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -8,9 +9,9 @@ const DB_URL =
 
 mongoose.connect(
   `mongodb+srv://${process.env.DB_ID}:${process.env.DB_PASSWORD}@${DB_URL}/?retryWrites=true&w=majority`,
-  { useNewUrlParser: true, useUnifiedTopology: true}
-  );
-  
+  { useNewUrlParser: true, useUnifiedTopology: true }
+);
+
 const db = mongoose.connection;
 
 db.on("connected", () =>
@@ -20,4 +21,4 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 );
 
-export { User, Education };
+export { User, Education, Certificate };
