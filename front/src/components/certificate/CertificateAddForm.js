@@ -15,7 +15,7 @@ function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {
     const id=portfolioOwnerId;
     const certiDate=certi_Date.toISOString().split("T")[0];
     try {
-      await Api.post(`users/${id}/certi/add`, {
+      await Api.post("certi/add", {
         id,
         certiTitle,
         certiDetail,
@@ -25,7 +25,7 @@ function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {
       console.log("등록에 실패하였습니다.", err);
     }
     
-    const res = await Api.get(`users/${id}/certi`);
+    const res = await Api.get("certi");
     setCertificates(res.data);
     setIsAdding(false);
   };

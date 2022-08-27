@@ -11,7 +11,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
    
-    Api.get(`users/${portfolioOwnerId}/project`).then((res) =>
+    Api.get("project").then((res) =>
       setProjects(res.data)
     );
   }, [portfolioOwnerId]);

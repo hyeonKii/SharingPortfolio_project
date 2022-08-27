@@ -70,7 +70,7 @@ educationRouter.get(
     try {
       const user_id = req.currentUserId;
       const currentEduInfo = await eduService.getEduInfo({ user_id });
-
+      
       res.status(200).send(currentEduInfo);
     } catch (error) {
       next(error);

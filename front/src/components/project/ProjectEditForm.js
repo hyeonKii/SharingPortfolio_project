@@ -19,7 +19,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     const toDate = to_Date.toISOString().split("T")[0];
 
     
-    await Api.put(`users/${id}/project/${currentProject.pro_id}/update`, {
+    await Api.put(`project/${currentProject.pro_id}/update`, {
       id,
       projectTitle,
       projectDetail,
@@ -28,7 +28,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     });
 
     
-    const res = await Api.get(`users/${id}/project`);
+    const res = await Api.get("project");
     
     setProjects(res.data);
     setIsEditing(false);

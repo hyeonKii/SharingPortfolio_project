@@ -11,7 +11,7 @@ function Educations({portfolioOwnerId,isEditable }) {
 
   useEffect(() => {
     // "`users/${portfolioOwnerId}/edu`"로 GET
-    Api.get(`users/${portfolioOwnerId}/edu`).then((res) =>
+    Api.get("edu").then((res) =>
       setEducations(res.data)
     );
   },[portfolioOwnerId]);

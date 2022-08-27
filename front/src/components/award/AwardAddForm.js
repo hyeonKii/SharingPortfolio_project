@@ -15,7 +15,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
 
     
     try {
-    await Api.post(`users/${id}/award/add`, {
+    await Api.post("award/add", {
       id,
       awardTitle,
       awardDetail,
@@ -25,7 +25,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
     }
 
     
-    const res = await Api.get(`users/${id}/award`);
+    const res = await Api.get("award");
     
     setAwards(res.data);
     setIsAdding(false);

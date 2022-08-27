@@ -15,14 +15,14 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     const id = currentAward.id;
 
     
-    await Api.put(`users/${id}/award/${currentAward.award_id}/update`, {
+    await Api.put(`award/${currentAward.award_id}/update`, {
       id,
       awardTitle,
       awardDetail,
     });
 
    
-    const res = await Api.get(`users/${id}/award`);
+    const res = await Api.get("award");
     
     setAwards(res.data);
     setIsEditing(false);

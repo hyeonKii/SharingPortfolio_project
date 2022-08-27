@@ -14,14 +14,14 @@ function CertiEditForm({ currentcertificate, setIsEditing, setCertificates }) {
 
     const id = currentcertificate.id;
     const certiDate=certi_Date.toISOString().split("T")[0];
-    await Api.put(`users/${id}/certi/${currentcertificate.certi_id}/update`, {
+    await Api.put(`certi/${currentcertificate.certi_id}/update`, {
       id,
       certiTitle,
       certiDetail,
       certiDate,
     });
     
-    const res = await Api.get(`users/${id}/certi`);
+    const res = await Api.get("certi");
     setCertificates(res.data);
     setIsEditing(false);
   };

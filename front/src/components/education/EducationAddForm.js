@@ -12,7 +12,7 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
     e.preventDefault();
     const id=portfolioOwnerId;  //로그인된 사용자 id
     try {
-      await Api.post(`users/${id}/edu/add`, {
+      await Api.post("edu/add", {
         id,
         school,
         major,
@@ -23,7 +23,7 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
       console.log("등록에 실패하였습니다.", err);
     }
     
-    const res = await Api.get(`users/${id}/edu`);
+    const res = await Api.get("edu");
     setEdu(res.data);
     setIsAdding(false);
   };

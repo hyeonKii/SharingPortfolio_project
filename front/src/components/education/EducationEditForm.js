@@ -14,7 +14,7 @@ function EduEditForm({ edu, setIsEditing, setEdu }) {
     
     const id = edu.id;  //id는 사용자 id
     try{
-    await Api.put(`users/${id}/edu/${edu.edu_id}/update`, {    ///users/:id/edu/:edu_id/update
+    await Api.put(`edu/${edu.edu_id}/update`, {    ///users/:id/edu/:edu_id/update
       id,
       school,
       major,
@@ -23,7 +23,7 @@ function EduEditForm({ edu, setIsEditing, setEdu }) {
       console.log("편집에 실패하였습니다.", err);
     }
     // edu 정보는 response의 data임.
-    const res = await Api.get(`users/${id}/edu`);
+    const res = await Api.get("edu");
 
     // 해당 edu 정보로 edu을 세팅함.
     setEdu(res.data);

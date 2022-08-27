@@ -11,7 +11,7 @@ function Awards({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
   
-    Api.get(`users/${portfolioOwnerId}/award`).then((res) => setAwards(res.data));
+    Api.get("award").then((res) => setAwards(res.data));
   }, [portfolioOwnerId]);
 
   return (
