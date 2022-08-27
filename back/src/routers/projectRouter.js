@@ -6,7 +6,7 @@ import { projectService } from "../services/projectService";
 const projectRouter = Router();
 
 projectRouter.post(
-  "/users/:id/project/add",
+  "/project/add",
   login_required,
   async function (req, res, next) {
     try {
@@ -15,6 +15,8 @@ projectRouter.post(
           "headers의 Content-Type을 application/json으로 설정해주세요"
         );
       }
+      // jwt 토큰에서 추출된 사용자id를 가지고 db에서 사용자 정보를 찾음
+      const user_id = req.currentUserId;
       // req (request) 에서 데이터 가져오기
       const projectTitle = req.body.projectTitle;
       const projectDetail = req.body.projectDetail;
@@ -22,7 +24,7 @@ projectRouter.post(
       const toDate = req.body.toDate;
 
       const newProject = await projectService.addProject({
-        id: req.params.id,
+        id: user_id,
         projectTitle,
         projectDetail,
         fromDate,
@@ -37,7 +39,7 @@ projectRouter.post(
 
 // 등록된 Education 정보 수정하기
 projectRouter.put(
-  "/users/:id/project/:pro_id/update",
+  "/project/:pro_id/update",
   login_required,
   async function (req, res, next) {
     try {
@@ -65,13 +67,13 @@ projectRouter.put(
   }
 );
 
-// 현재 사용자의 Education 정보 가져오기
+// 현재 사용자의 project 정보 가져오기
 projectRouter.get(
-  "/users/:id/project",
+  "/project",
   login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.params.id;
+      const user_id = req.currentUserId;
       const currentProjectInfo = await projectService.getProjectInfo({ user_id });
 
       res.status(200).send(currentProjectInfo);

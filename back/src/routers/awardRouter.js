@@ -6,7 +6,7 @@ import { awardService } from "../services/awardService";
 const awardRouter = Router();
 
 awardRouter.post(
-  "/users/:id/award/add",
+  "/award/add",
   login_required,
   async function (req, res, next) {
     try {
@@ -16,12 +16,12 @@ awardRouter.post(
         );
       }
 
-      // req (request) 에서 데이터 가져오기
+      const user_id = req.currentUserId;
       const awardTitle = req.body.awardTitle;
       const awardDetail = req.body.awardDetail;
 
       const newAward = await awardService.addAward({
-        id: req.params.id,
+        id: user_id,
         awardTitle,
         awardDetail,
       });
@@ -39,7 +39,7 @@ awardRouter.post(
 
 // 등록된 수상 이력 정보 수정하기
 awardRouter.put(
-  "/users/:id/award/:award_id/update",
+  "/award/:award_id/update",
   login_required,
   async function (req, res, next) {
     try {
@@ -67,11 +67,11 @@ awardRouter.put(
 
 // 현재 사용자의 수상 이력 정보 가져오기
 awardRouter.get(
-  "/users/:id/award",
+  "/award",
   login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.params.id;
+      const user_id = req.currentUserId;
       const currentAwardInfo = await awardService.getAwardInfo({ user_id });
 
       res.status(200).send(currentAwardInfo);

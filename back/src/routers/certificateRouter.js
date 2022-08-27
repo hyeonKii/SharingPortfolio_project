@@ -6,7 +6,7 @@ import { certiService } from "../services/certiService";
 const certificateRouter = Router();
 
 certificateRouter.post(
-  "/users/:id/certi/add",
+  "/certi/add",
   login_required,
   async function (req, res, next) {
     try {
@@ -16,12 +16,13 @@ certificateRouter.post(
         );
       }
       // req (request) 에서 데이터 가져오기
+      const user_id = req.currentUserId;
       const certiTitle = req.body.certiTitle;
       const certiDetail = req.body.certiDetail;
       const certiDate = req.body.certiDate;
 
       const newCerti = await certiService.addCerti({
-        id: req.params.id,
+        id: user_id,
         certiTitle,
         certiDetail,
         certiDate,
@@ -35,7 +36,7 @@ certificateRouter.post(
 
 // 등록된 Certificate 정보 수정하기
 certificateRouter.put(
-  "/users/:id/certi/:certi_id/update",
+  "/certi/:certi_id/update",
   login_required,
   async function (req, res, next) {
     try {
@@ -67,11 +68,11 @@ certificateRouter.put(
 
 // 현재 사용자의 Education 정보 가져오기
 certificateRouter.get(
-  "/users/:id/certi",
+  "/certi",
   login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.params.id;
+      const user_id = req.currentUserId;
       const currentCertiInfo = await certiService.getCertiInfo({ user_id });
 
       res.status(200).send(currentCertiInfo);

@@ -6,7 +6,7 @@ import { eduService } from "../services/eduService";
 const educationRouter = Router();
 
 educationRouter.post(
-  "/users/:id/edu/add",
+  "/edu/add",
   login_required,
   async function (req, res, next) {
     try {
@@ -15,13 +15,13 @@ educationRouter.post(
           "headers의 Content-Type을 application/json으로 설정해주세요"
         );
       }
-      // req (request) 에서 데이터 가져오기
+      const user_id = req.currentUserId;
       const school = req.body.school;
       const major = req.body.major;
       const degree = req.body.degree;
 
       const newEdu = await eduService.addEdu({
-        id: req.params.id,
+        id: user_id,
         school,
         major,
         degree,
@@ -35,7 +35,7 @@ educationRouter.post(
 
 // 등록된 Education 정보 수정하기
 educationRouter.put(
-  "/users/:id/edu/:edu_id/update",
+  "/edu/:edu_id/update",
   login_required,
   async function (req, res, next) {
     try {
@@ -64,11 +64,11 @@ educationRouter.put(
 
 // 현재 사용자의 Education 정보 가져오기
 educationRouter.get(
-  "/users/:id/edu",
+  "/edu",
   login_required,
   async function (req, res, next) {
     try {
-      const user_id = req.params.id;
+      const user_id = req.currentUserId;
       const currentEduInfo = await eduService.getEduInfo({ user_id });
 
       res.status(200).send(currentEduInfo);
