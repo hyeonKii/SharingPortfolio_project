@@ -19,13 +19,21 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id = currentAward.id;
-    await Api.put(`award/${currentAward.award_id}/update`, {
-      id,
-      ...awardForm,
-    });
+    try {
+      await Api.put(`award/${currentAward.award_id}/update`, {
+        id,
+        ...awardForm,
+      });
+    } catch (error) {
+      console.log("award편집에 실패하였습니다.", error);
+    }
     const res = await Api.get("award");
+    if (!Array.isArray(res.data)) {
+      console.log("res.data is not array");
+      return;
+    }
     setAwards(res.data);
-    setIsEditing(prev=>!prev);
+    setIsEditing((prev) => !prev);
   };
 
   return (
@@ -55,7 +63,10 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
           <Button variant="primary" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsEditing(prev=>!prev)}>
+          <Button
+            variant="secondary"
+            onClick={() => setIsEditing((prev) => !prev)}
+          >
             취소
           </Button>
         </Col>
