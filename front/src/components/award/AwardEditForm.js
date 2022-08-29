@@ -20,7 +20,7 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     e.preventDefault();
     const id = currentAward.id;
     try {
-      await Api.put(`award/${currentAward.award_id}/update`, {
+      await Api.put(`award/${currentAward.awardId}`, {
         id,
         ...awardForm,
       });

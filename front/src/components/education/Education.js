@@ -14,6 +14,7 @@ function Education({ edu, isEditable, setEdu }) {
           edu={edu}
           setIsEditing={toggleEdit}
           isEditable={isEditable}
+          setEdu={setEdu}
         />
       ) : (
         <EducationEditForm
