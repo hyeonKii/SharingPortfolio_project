@@ -24,7 +24,7 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
 
     const id = edu.id; //id는 사용자 id
     try {
-      await Api.put(`edu/${edu.edu_id}/update`, {
+      await Api.put(`edu/${edu.eduId}`, {
         ///users/:id/edu/:edu_id/update
         id,
         ...educationForm,
