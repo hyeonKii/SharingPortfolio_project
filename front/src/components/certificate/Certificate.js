@@ -4,7 +4,7 @@ import CertifiEditForm from "./CertificateEditForm";
 
 
 function Certificate({ certificate, setCertificates, isEditable }) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState("");
   //front code review no.2
   const toggleEdit = () => {
     setIsEditing((prev) => !prev);

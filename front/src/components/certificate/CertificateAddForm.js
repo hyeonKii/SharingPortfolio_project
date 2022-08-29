@@ -40,6 +40,12 @@ function handleOnchange(e){
     }
     
     const res = await Api.get("certi");
+    //res.data가 배열인지 확인
+    if (!Array.isArray(res.data)) {
+      console.log("res.data is not array");
+      return;
+    }
+
     setCertificates(res.data);
     setIsAdding(prev=>!prev);
   };

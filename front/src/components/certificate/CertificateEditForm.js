@@ -26,13 +26,22 @@ function handleOnchange(e) {
 
     const id = currentcertificate.id;
     const certiDate=certi_Date.toISOString().split("T")[0];
-    await Api.put(`certi/${currentcertificate.certi_id}/update`, {
-      id,
-      ...certiForm,
-      certiDate,
-    });
+    //try~catch
+    try{
+      await Api.put(`certi/${currentcertificate.certi_id}/update`, {
+        id,
+        ...certiForm,
+        certiDate,
+      });}catch(err){
+        console.log("편집에 실패하였습니다.",err);
+      }
     
     const res = await Api.get("certi");
+    //res.data가 배열인지 확인
+    if (!Array.isArray(res.data)) {
+      console.log("res.data is not array");
+      return;
+    }
     setCertificates(res.data);
     setIsEditing(prev=>!prev);
   };
