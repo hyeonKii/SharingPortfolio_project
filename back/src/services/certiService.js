@@ -1,11 +1,11 @@
-import { User, Certificate } from "../db";
+import { Certificate } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class certiService {
   static async addCerti({ id, certiTitle, certiDetail, certiDate }) {
-    const certi_id = uuidv4();
+    const certiId = uuidv4();
 
-    const newCerti = { id, certi_id, certiTitle, certiDetail, certiDate };
+    const newCerti = { id, certiId, certiTitle, certiDetail, certiDate };
 
     // db에 저장
     const createdNewCerti = await Certificate.create({ newCerti });

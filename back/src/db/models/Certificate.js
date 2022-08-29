@@ -12,7 +12,7 @@ class Certificate {
   // }
 
   static async findById({ certificate_id }) {
-    const certi = await CertificateModel.findOne({ certi_id: certificate_id });
+    const certi = await CertificateModel.findOne({ certiId: certificate_id });
     return certi;
   }
 
