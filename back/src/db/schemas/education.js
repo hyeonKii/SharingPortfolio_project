@@ -6,7 +6,7 @@ const EducationSchema = new Schema(
       type: String,
       required: true,
     },
-    edu_id: {
+    eduId: {
       type: String,
       required: true,
     },
