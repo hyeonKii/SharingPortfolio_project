@@ -69,6 +69,13 @@ class certiService {
 
     return certi;
   }
+
+  //추가기능 삭제
+  static async deletedCerti({ certificate_id }) {
+    const certi = await Certificate.deleteOne({ certificate_id });
+
+    return certi;
+  }
 }
 
 export { certiService };

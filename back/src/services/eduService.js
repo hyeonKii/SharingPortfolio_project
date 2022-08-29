@@ -61,6 +61,13 @@ class eduService {
 
     return edu;
   }
+
+  //추가기능 삭제
+  static async deletedEdu({ education_id }) {
+    const edu = await Education.deleteOne({ education_id });
+
+    return edu;
+  }
 }
 
 export { eduService };
