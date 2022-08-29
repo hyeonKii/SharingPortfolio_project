@@ -4,11 +4,22 @@ import DatePicker from "react-datepicker";
 import * as Api from "../../api";
 
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
+  //1번 수정
+  const [projectForm, setProjectForm] = useState({
+    projectTitle: "",
+    projectDetail: "",
+  });
   
-  const [projectTitle, setProjectTitle] = useState("");
-  const [projectDetail, setProjectDetail] = useState("");
   const [from_Date, setFrom_Date] = useState(new Date());
   const [to_Date, setTo_Date] = useState(new Date());
+
+  function handleOnchange(e){
+    const {name,value} = e.target;
+    setProjectForm(prev=>({
+     ...prev,
+     [name]:value,
+    }));
+ }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,8 +31,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     try {
     await Api.post("project/add", {
       id,
-      projectTitle,
-      projectDetail,
+      ...projectForm,
       fromDate,
       toDate,
     });
@@ -42,8 +52,9 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         <Form.Control
           type="text"
           placeholder="프로젝트 제목"
-          value={projectTitle}
-          onChange={(e) => setProjectTitle(e.target.value)}
+          name="projectTitle"
+          value={projectForm.projectTitle}
+          onChange={handleOnchange}
         />
       </Form.Group>
 
@@ -51,8 +62,9 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         <Form.Control
           type="text"
           placeholder="상세내역"
-          value={projectDetail}
-          onChange={(e) => setProjectDetail(e.target.value)}
+          name="projectDetail"
+          value={projectForm.projectDetail}
+          onChange={handleOnchange}
         />
       </Form.Group>
 
