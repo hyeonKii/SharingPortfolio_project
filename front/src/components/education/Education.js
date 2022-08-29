@@ -1,7 +1,7 @@
 
 import React, { useState} from "react";
 import EducationCard from "./EducationCard";
-import EduEditForm from "./EducationEditForm";
+import EducationEditForm from "./EducationEditForm";
 
 function Education({ edu, isEditable,setEdu }) {
  
@@ -15,7 +15,7 @@ function Education({ edu, isEditable,setEdu }) {
         isEditable={isEditable}
       />
     ) : (
-      <EduEditForm
+      <EducationEditForm
         edu={edu}
         setIsEditing={setIsEditing}
         setEdu={setEdu}
