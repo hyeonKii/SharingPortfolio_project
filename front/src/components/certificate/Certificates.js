@@ -21,7 +21,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
       <Card.Title>자격증</Card.Title>
           {certificates.map((certificate)=>(
             <Certificate
-            key={certificate.id}
+            key={certificate.certiId}
             certificate={certificate}
             setCertificates={setCertificates}
             isEditable={isEditable}

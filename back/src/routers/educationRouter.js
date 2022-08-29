@@ -63,15 +63,44 @@ educationRouter.put(
 );
 
 // 현재 사용자의 Education 정보 가져오기
-educationRouter.get("/edu", login_required, async function (req, res, next) {
-  try {
-    const user_id = req.currentUserId;
-    const currentEduInfo = await eduService.getEduInfo({ user_id });
+educationRouter.get(
+  "/edu/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      // const user_id = req.currentUserId; // 현재 사용자 id만 가져오는 코드
+      const user_id = req.params.id;
+      const currentEduInfo = await eduService.getEduInfo({ user_id });
 
-    res.status(200).send(currentEduInfo);
-  } catch (error) {
-    next(error);
+      res.status(200).send(currentEduInfo);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
+
+//추가기능. 삭제
+educationRouter.delete(
+  "/edu/:eduId",
+  login_required,
+  async function (req, res, next) {
+    try {
+      //URI로부터 edu id 추출
+      const education_id = req.params.eduId;
+
+      //해당 사용자 아이디로 Education 정보를 db에서 찾아 삭제함.
+
+      const deletedEdu = await eduService.deletedEdu({ education_id });
+
+      if (deletedEdu.errorMessage) {
+        throw new Error(deletedEdu.errorMessage);
+      }
+
+      res.status(200).json(deletedEdu);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { educationRouter };
