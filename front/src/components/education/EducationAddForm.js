@@ -32,7 +32,7 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
       console.log("등록에 실패하였습니다.", err);
     }
 
-    const res = await Api.get("edu");
+    const res = await Api.get("edu",id);
     if (!Array.isArray(res.data)) {
       console.log("res.data is not array");
       return;
