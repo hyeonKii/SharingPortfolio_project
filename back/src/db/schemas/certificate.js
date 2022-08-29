@@ -8,7 +8,7 @@ const CertificateSchema = new Schema(
       type: String,
       required: true,
     },
-    certi_id: {
+    certiId: {
       type: String,
       required: true,
     },

@@ -35,12 +35,12 @@ educationRouter.post(
 
 // 등록된 Education 정보 수정하기
 educationRouter.put(
-  "/edu/:edu_id/update",
+  "/edu/:eduId",
   login_required,
   async function (req, res, next) {
     try {
       //URI로부터 edu id 추출
-      const education_id = req.params.edu_id;
+      const education_id = req.params.eduId;
       // body data로부터 업데이트할 Education 정보 추출
       const school = req.body.school ?? null;
       const major = req.body.major ?? null;
@@ -63,19 +63,15 @@ educationRouter.put(
 );
 
 // 현재 사용자의 Education 정보 가져오기
-educationRouter.get(
-  "/edu",
-  login_required,
-  async function (req, res, next) {
-    try {
-      const user_id = req.currentUserId;
-      const currentEduInfo = await eduService.getEduInfo({ user_id });
-      
-      res.status(200).send(currentEduInfo);
-    } catch (error) {
-      next(error);
-    }
+educationRouter.get("/edu", login_required, async function (req, res, next) {
+  try {
+    const user_id = req.currentUserId;
+    const currentEduInfo = await eduService.getEduInfo({ user_id });
+
+    res.status(200).send(currentEduInfo);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 export { educationRouter };

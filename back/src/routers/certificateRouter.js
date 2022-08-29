@@ -36,12 +36,12 @@ certificateRouter.post(
 
 // 등록된 Certificate 정보 수정하기
 certificateRouter.put(
-  "/certi/:certi_id/update",
+  "/certi/:certiId",
   login_required,
   async function (req, res, next) {
     try {
       //URI로부터 certi id 추출
-      const certificate_id = req.params.certi_id;
+      const certificate_id = req.params.certiId;
       // body data로부터 업데이트할 Education 정보 추출
       const certiTitle = req.body.certiTitle ?? null;
       const certiDetail = req.body.certiDetail ?? null;

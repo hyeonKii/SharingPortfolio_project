@@ -7,17 +7,17 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
   // const [awardDetail, setAwardDetail] = useState("");
   //////1번 리뷰 수정
   const [awardForm, setAwardForm] = useState({
-      awardTitle: "",
-      awardDetail: "",
+    awardTitle: "",
+    awardDetail: "",
   });
-  function handleOnchange(e){
-     const {name,value} = e.target;
-     setAwardForm(prev=>({
+  function handleOnchange(e) {
+    const { name, value } = e.target;
+    setAwardForm((prev) => ({
       ...prev,
-      [name]:value,
-     }));
+      [name]: value,
+    }));
   }
-  //////1번 리뷰 수정 - 아래 form.control코드 name, value 수정해야됨. 
+  //////1번 리뷰 수정 - 아래 form.control코드 name, value 수정해야됨.
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id = portfolioOwnerId;
@@ -31,8 +31,12 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
     }
 
     const res = await Api.get("award");
+    if (!Array.isArray(res.data)) {
+      console.log("res.data is not array");
+      return;
+    }
     setAwards(res.data);
-    setIsAdding(prev=>!prev);
+    setIsAdding((prev) => !prev);
   };
 
   return (
@@ -41,7 +45,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
         <Form.Control
           type="text"
           placeholder="수상내역"
-          name= "awardTitle"
+          name="awardTitle"
           value={awardForm.awardTitle}
           onChange={handleOnchange}
         />
@@ -51,7 +55,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
         <Form.Control
           type="text"
           placeholder="상세내역"
-          name = "awardDetail"
+          name="awardDetail"
           value={awardForm.awardDetail}
           onChange={handleOnchange}
         />
@@ -62,7 +66,10 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
           <Button variant="primary" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsAdding(prev=>!prev)}>
+          <Button
+            variant="secondary"
+            onClick={() => setIsAdding((prev) => !prev)}
+          >
             취소
           </Button>
         </Col>
