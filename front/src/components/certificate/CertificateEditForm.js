@@ -28,7 +28,7 @@ function handleOnchange(e) {
     const certiDate=certi_Date.toISOString().split("T")[0];
     //try~catch
     try{
-      await Api.put(`certi/${currentcertificate.certi_Id}/update`, {
+      await Api.put(`certi/${currentcertificate.certiId}/update`, {
         id,
         ...certiForm,
         certiDate,
