@@ -38,7 +38,7 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
     // 해당 edu 정보로 edu을 세팅함.
     setEdu(res.data);
     // isEditing을 false로 세팅함.
-    setIsEditing(false);
+    setIsEditing(prev=>!prev);
   };
 
   return (
@@ -110,7 +110,7 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
           <Button variant="primary" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsEditing(false)}>
+          <Button variant="secondary" onClick={() => setIsEditing(prev=>!prev)}>
             취소
           </Button>
         </Col>

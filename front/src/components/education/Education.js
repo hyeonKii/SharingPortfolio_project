@@ -5,19 +5,22 @@ import EducationEditForm from "./EducationEditForm";
 
 function Education({ edu, isEditable,setEdu }) {
  
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState("");
+  const toggleEdit = () => {
+    setIsEditing((prev) => !prev);
+  };
   return (
     <>
     {!isEditing ? (
       <EducationCard
         edu={edu}
-        setIsEditing={setIsEditing}
+        setIsEditing={toggleEdit}
         isEditable={isEditable}
       />
     ) : (
       <EducationEditForm
         edu={edu}
-        setIsEditing={setIsEditing}
+        setIsEditing={toggleEdit}
         setEdu={setEdu}
       />
     )}
