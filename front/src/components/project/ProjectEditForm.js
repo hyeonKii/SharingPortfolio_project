@@ -5,8 +5,22 @@ import * as Api from "../../api";
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   
-  const [projectTitle, setProjectTitle] = useState(currentProject.projectTitle);
-  const [projectDetail, setProjectDetail] = useState(currentProject.projectDetail);
+  // const [projTitle, setProjTitle] = useState(currentProject.projectTitle);
+  // const [projDetail, setProjDetail] = useState(currentProject.projectDetail);
+
+  const [projectForm, setProjectForm] = useState({
+    projTitle: currentProject.projTitle,
+    projDetail: currentProject.projDetail,
+  })
+  
+  function handleOnchange(e) {
+    const { name, value } = e.target;
+    setProjectForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
   const [from_Date, setFrom_Date] = useState(new Date(currentProject.fromDate));
   const [to_Date, setTo_Date] = useState(new Date(currentProject.toDate));
 
@@ -18,20 +32,25 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     const fromDate = from_Date.toISOString().split("T")[0];
     const toDate = to_Date.toISOString().split("T")[0];
 
-    
-    await Api.put(`project/${currentProject.pro_id}/update`, {
+    try {
+    await Api.put(`project/${currentProject.projId}/update`, {
       id,
-      projectTitle,
-      projectDetail,
+      ...projectForm,
       fromDate,
       toDate,
     });
-
+  } catch (err) {
+    console.log("project 편집에 실패하였습니다.", err);
+  }
     
     const res = await Api.get("project");
     
+    if (!Array.isArray(res.data)) {
+      console.log("res.data is not array");
+      return;
+    }
     setProjects(res.data);
-    setIsEditing(false);
+    setIsEditing((prev) => !prev);
   };
 
   return (
@@ -40,8 +59,9 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         <Form.Control
           type="text"
           placeholder="프로젝트 제목"
-          value={projectTitle}
-          onChange={(e) => setProjectTitle(e.target.value)}
+          name="projTitle"
+          value={projectForm.projTitle}
+          onChange={handleOnchange}
         />
       </Form.Group>
 
@@ -49,8 +69,9 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         <Form.Control
           type="text"
           placeholder="상세내역"
-          value={projectDetail}
-          onChange={(e) => setProjectDetail(e.target.value)}
+          name="projDetail"
+          value={projectForm.projDetail}
+          onChange={handleOnchange}
         />
       </Form.Group>
 

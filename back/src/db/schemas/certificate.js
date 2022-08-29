@@ -23,7 +23,7 @@ const CertificateSchema = new Schema(
     certiDate: {
       //   type: String,
       //   format: Date,
-      type: String,
+      type: Date,
       required: true,
     },
   },
