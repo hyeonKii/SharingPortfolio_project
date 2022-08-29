@@ -5,9 +5,21 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function CertiEditForm({ currentcertificate, setIsEditing, setCertificates }) {
-  const [certiTitle, setCertiTitle] = useState(currentcertificate.certiTitle);
-  const [certiDetail, setCertiDetail] = useState(currentcertificate.certiDetail);
+  // const [certiTitle, setCertiTitle] = useState(currentcertificate.certiTitle);
+  // const [certiDetail, setCertiDetail] = useState(currentcertificate.certiDetail);
   const [certi_Date,setCerti_Date] = useState(new Date(currentcertificate.certiDate));
+
+  const [certiForm, setCertiForm] = useState({
+    certiTitle: currentcertificate.certiTitle,
+    certiDetail: currentcertificate.certiDetail,
+});
+function handleOnchange(e) {
+  const { name, value } = e.target;
+  setCertiForm((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,14 +28,13 @@ function CertiEditForm({ currentcertificate, setIsEditing, setCertificates }) {
     const certiDate=certi_Date.toISOString().split("T")[0];
     await Api.put(`certi/${currentcertificate.certi_id}/update`, {
       id,
-      certiTitle,
-      certiDetail,
+      ...certiForm,
       certiDate,
     });
     
     const res = await Api.get("certi");
     setCertificates(res.data);
-    setIsEditing(false);
+    setIsEditing(prev=>!prev);
   };
 
   return (
@@ -32,8 +43,9 @@ function CertiEditForm({ currentcertificate, setIsEditing, setCertificates }) {
             <Form.Control
               type="text"
               placeholder="자격증 이름"
-              value={certiTitle}
-              onChange={(e) => setCertiTitle(e.target.value)}
+              name = "certiTitle"
+              value={certiForm.certiTitle}
+              onChange={handleOnchange}
             />
           </Form.Group>
 
@@ -41,8 +53,9 @@ function CertiEditForm({ currentcertificate, setIsEditing, setCertificates }) {
             <Form.Control
               type="detail"
               placeholder="세부사항"
-              value={certiDetail}
-              onChange={(e) => setCertiDetail(e.target.value)}
+              name = "certiDetail"
+              value={certiForm.certiDetail}
+              onChange={handleOnchange}
             />
           </Form.Group>
 
@@ -60,7 +73,7 @@ function CertiEditForm({ currentcertificate, setIsEditing, setCertificates }) {
               <Button variant="primary" type="submit" className="me-3">
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
+              <Button variant="secondary" onClick={() => setIsEditing(prev=>!prev)}>
                 취소
               </Button>
               </Col>

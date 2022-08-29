@@ -41,7 +41,7 @@ function handleOnchange(e){
     
     const res = await Api.get("certi");
     setCertificates(res.data);
-    setIsAdding(false);
+    setIsAdding(prev=>!prev);
   };
 
   return (
@@ -80,7 +80,7 @@ function handleOnchange(e){
               <Button variant="primary" type="submit" className="me-3">
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsAdding(false)}>
+              <Button variant="secondary" onClick={() => setIsAdding(prev=>!prev)}>
                 취소
               </Button>
               </Col>
