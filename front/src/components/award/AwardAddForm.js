@@ -3,30 +3,34 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
- 
-  const [awardTitle, setAwardTitle] = useState("");
-  const [awardDetail, setAwardDetail] = useState("");
-
+  // const [awardTitle, setAwardTitle] = useState("");
+  // const [awardDetail, setAwardDetail] = useState("");
+  //////1번 리뷰 수정
+  const [awardForm, setAwardForm] = useState({
+      awardTitle: "",
+      awardDetail: "",
+  });
+  function handleOnchange(e){
+     const {name,value} = e.target;
+     setAwardForm(prev=>({
+      ...prev,
+      [name]:value,
+     }));
+  }
+  //////1번 리뷰 수정 - 아래 form.control코드 name, value 수정해야됨. 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-  
     const id = portfolioOwnerId;
-
-    
     try {
-    await Api.post("award/add", {
-      id,
-      awardTitle,
-      awardDetail,
-    });
+      await Api.post("award/add", {
+        id,
+        ...awardForm,
+      });
     } catch (err) {
-        console.log("등록에 실패하였습니다.", err);
+      console.log("등록에 실패하였습니다.", err);
     }
 
-    
     const res = await Api.get("award");
-    
     setAwards(res.data);
     setIsAdding(false);
   };
@@ -37,8 +41,9 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
         <Form.Control
           type="text"
           placeholder="수상내역"
-          value={awardTitle}
-          onChange={(e) => setAwardTitle(e.target.value)}
+          name= "awardTitle"
+          value={awardForm.awardTitle}
+          onChange={handleOnchange}
         />
       </Form.Group>
 
@@ -46,8 +51,9 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
         <Form.Control
           type="text"
           placeholder="상세내역"
-          value={awardDetail}
-          onChange={(e) => setAwardDetail(e.target.value)}
+          name = "awardDetail"
+          value={awardForm.awardDetail}
+          onChange={handleOnchange}
         />
       </Form.Group>
 
