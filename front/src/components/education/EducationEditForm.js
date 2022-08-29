@@ -36,9 +36,13 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
     const res = await Api.get("edu");
 
     // 해당 edu 정보로 edu을 세팅함.
+    if (!Array.isArray(res.data)) {
+      console.log("res.data is not array");
+      return;
+    }
     setEdu(res.data);
     // isEditing을 false로 세팅함.
-    setIsEditing(prev=>!prev);
+    setIsEditing((prev) => !prev);
   };
 
   return (
@@ -56,7 +60,7 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
         <Form.Control
           type="text"
           placeholder="전공"
-          name ="major"
+          name="major"
           value={educationForm.major}
           onChange={handleOnchange}
         />
@@ -110,7 +114,10 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
           <Button variant="primary" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsEditing(prev=>!prev)}>
+          <Button
+            variant="secondary"
+            onClick={() => setIsEditing((prev) => !prev)}
+          >
             취소
           </Button>
         </Col>
