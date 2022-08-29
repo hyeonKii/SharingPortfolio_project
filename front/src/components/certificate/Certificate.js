@@ -5,19 +5,24 @@ import CertifiEditForm from "./CertificateEditForm";
 
 function Certificate({ certificate, setCertificates, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
+  //front code review no.2
+  const toggleEdit = () => {
+    setIsEditing((prev) => !prev);
+  };
+
   return (
     <>
       {isEditing ? (
         <CertifiEditForm
         currentcertificate={certificate}
           setCertificates={setCertificates}
-          setIsEditing={setIsEditing}
+          setIsEditing={toggleEdit}
         />
       ) : (
         <CertifiCard
           certificate={certificate}
           isEditable={isEditable}
-          setIsEditing={setIsEditing}
+          setIsEditing={toggleEdit}
         />
       )}
     </>
