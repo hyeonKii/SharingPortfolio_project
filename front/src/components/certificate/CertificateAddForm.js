@@ -6,9 +6,24 @@ import * as Api from "../../api";
 
 
 function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {
-  const [certiTitle, setCertiTitle] = useState("");
-  const [certiDetail, setCertiDetail] = useState("");
+
+
+  // const [certiTitle, setCertiTitle] = useState("");
+  // const [certiDetail, setCertiDetail] = useState("");
   const [certi_Date,setCerti_Date] = useState(new Date());
+// 1번리뷰 수정
+  const [certiForm, setCertiForm] = useState({
+    certiTitle: "",
+    certiDetail: "",
+});
+
+function handleOnchange(e){
+  const {name,value} = e.target;
+  setCertiForm(prev=>({
+   ...prev,
+   [name]:value,
+  }));
+}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,9 +32,8 @@ function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {
     try {
       await Api.post("certi/add", {
         id,
-        certiTitle,
-        certiDetail,
         certiDate,
+        ...certiForm,
       });
     } catch (err) {
       console.log("등록에 실패하였습니다.", err);
@@ -27,7 +41,7 @@ function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {
     
     const res = await Api.get("certi");
     setCertificates(res.data);
-    setIsAdding(false);
+    setIsAdding(prev=>!prev);
   };
 
   return (
@@ -36,8 +50,9 @@ function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {
             <Form.Control
               type="text"
               placeholder="자격증 이름"
-              value={certiTitle}
-              onChange={(e) => setCertiTitle(e.target.value)}
+              name = "certiTitle"
+              value={certiForm.certiTitle}
+              onChange={handleOnchange}
             />
           </Form.Group>
 
@@ -45,8 +60,9 @@ function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {
             <Form.Control
               type="detail"
               placeholder="세부사항"
-              value={certiDetail}
-              onChange={(e) => setCertiDetail(e.target.value)}
+              name = "certiDetail"
+              value={certiForm.certiDetail}
+              onChange={handleOnchange}
             />
           </Form.Group>
 
@@ -64,7 +80,7 @@ function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {
               <Button variant="primary" type="submit" className="me-3">
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsAdding(false)}>
+              <Button variant="secondary" onClick={() => setIsAdding(prev=>!prev)}>
                 취소
               </Button>
               </Col>
