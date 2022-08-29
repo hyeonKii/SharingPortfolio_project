@@ -3,21 +3,25 @@ import AwardCard from "./AwardCard";
 import AwardEditForm from "./AwardEditForm";
 
 function Award({ award, setAwards, isEditable }) {
-  
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState("");
+  ///front code review no.2
+  const toggleEdit = () => {
+    setIsEditing((prev) => !prev);
+  };
+  /// setIsEditing={}도 수정
   return (
     <>
       {isEditing ? (
         <AwardEditForm
           currentAward={award}
           setAwards={setAwards}
-          setIsEditing={setIsEditing}
+          setIsEditing={toggleEdit}
         />
       ) : (
         <AwardCard
           award={award}
           isEditable={isEditable}
-          setIsEditing={setIsEditing}
+          setIsEditing={toggleEdit}
         />
       )}
     </>

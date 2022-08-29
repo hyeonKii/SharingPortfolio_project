@@ -32,7 +32,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
 
     const res = await Api.get("award");
     setAwards(res.data);
-    setIsAdding(false);
+    setIsAdding(prev=>!prev);
   };
 
   return (
@@ -62,7 +62,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
           <Button variant="primary" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsAdding(false)}>
+          <Button variant="secondary" onClick={() => setIsAdding(prev=>!prev)}>
             취소
           </Button>
         </Col>

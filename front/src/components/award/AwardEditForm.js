@@ -5,17 +5,17 @@ import * as Api from "../../api";
 function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
   // const [awardTitle, setAwardTitle] = useState(currentAward.awardTitle);
   // const [awardDetail, setAwardDetail] = useState(currentAward.awardDetail);
-  const [awardForm,setAwardForm]=useState({
-      awardTitle: currentAward.awardTitle,
-      awardDetail: currentAward.awardDetail,
-  })
-  function handleOnchange(e){
-    const {name,value} = e.target;
-    setAwardForm(prev=>({
-     ...prev,
-     [name]:value,
+  const [awardForm, setAwardForm] = useState({
+    awardTitle: currentAward.awardTitle,
+    awardDetail: currentAward.awardDetail,
+  });
+  function handleOnchange(e) {
+    const { name, value } = e.target;
+    setAwardForm((prev) => ({
+      ...prev,
+      [name]: value,
     }));
- }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id = currentAward.id;
@@ -25,7 +25,7 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     });
     const res = await Api.get("award");
     setAwards(res.data);
-    setIsEditing(false);
+    setIsEditing(prev=>!prev);
   };
 
   return (
@@ -34,7 +34,7 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
         <Form.Control
           type="text"
           placeholder="수상내역"
-          name= "awardTitle"
+          name="awardTitle"
           value={awardForm.awardTitle}
           onChange={handleOnchange}
         />
@@ -44,7 +44,7 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
         <Form.Control
           type="text"
           placeholder="상세내역"
-          name = "awardDetail"
+          name="awardDetail"
           value={awardForm.awardDetail}
           onChange={handleOnchange}
         />
@@ -55,7 +55,7 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
           <Button variant="primary" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsEditing(false)}>
+          <Button variant="secondary" onClick={() => setIsEditing(prev=>!prev)}>
             취소
           </Button>
         </Col>
