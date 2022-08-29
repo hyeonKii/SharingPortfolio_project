@@ -147,4 +147,24 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
     );
 });
 
+// //추가기능. 삭제
+// userAuthRouter.delete(
+//   "/users/:id",
+//   login_required,
+//   async function (req, res, next) {
+//     try {
+//       const user_id = req.params.id;
+//       const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+
+//       if (currentUserInfo.errorMessage) {
+//         throw new Error(currentUserInfo.errorMessage);
+//       }
+
+//       res.status(200).send(currentUserInfo);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
 export { userAuthRouter };
