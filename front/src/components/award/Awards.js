@@ -5,13 +5,17 @@ import Award from "./Award";
 import AwardAddForm from "./AwardAddForm";
 
 function Awards({ portfolioOwnerId, isEditable }) {
-
   const [awards, setAwards] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-  
-    Api.get("award").then((res) => setAwards(res.data));
+    Api.get("award").then((res) => {
+      if (!Array.isArray(res.data)) {
+        console.log("res.data is not array");
+        return;
+      }
+      setAwards(res.data);
+    });
   }, [portfolioOwnerId]);
 
   return (

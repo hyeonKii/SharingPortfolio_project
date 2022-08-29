@@ -30,7 +30,7 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
         ...educationForm,
       });
     } catch (err) {
-      console.log("편집에 실패하였습니다.", err);
+      console.log("education편집에 실패하였습니다.", err);
     }
     // edu 정보는 response의 data임.
     const res = await Api.get("edu");
