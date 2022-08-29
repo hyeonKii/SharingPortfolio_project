@@ -28,7 +28,7 @@ function handleOnchange(e) {
     const certiDate=certi_Date.toISOString().split("T")[0];
     //try~catch
     try{
-      await Api.put(`certi/${currentcertificate.certi_id}/update`, {
+      await Api.put(`certi/${currentcertificate.certi_Id}/update`, {
         id,
         ...certiForm,
         certiDate,
@@ -37,7 +37,7 @@ function handleOnchange(e) {
       }
     
     const res = await Api.get("certi");
-    //res.data가 배열인지 확인
+    // res.data가 배열인지 확인
     if (!Array.isArray(res.data)) {
       console.log("res.data is not array");
       return;
