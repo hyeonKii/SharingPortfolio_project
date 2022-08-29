@@ -11,7 +11,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
     // "`users/${portfolioOwnerId}/certificate`"로 GET
-    Api.get("certi").then((res) => setCertificates(res.data));
+    Api.get("certi",portfolioOwnerId).then((res) => setCertificates(res.data));
   }, [portfolioOwnerId]);
 
   return (

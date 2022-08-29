@@ -39,7 +39,7 @@ function handleOnchange(e){
       console.log("등록에 실패하였습니다.", err);
     }
     
-    const res = await Api.get("certi");
+    const res = await Api.get("certi",id);
     //res.data가 배열인지 확인
     if (!Array.isArray(res.data)) {
       console.log("res.data is not array");

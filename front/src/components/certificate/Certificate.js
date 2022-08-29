@@ -21,6 +21,7 @@ function Certificate({ certificate, setCertificates, isEditable }) {
       ) : (
         <CertifiCard
           certificate={certificate}
+          setCertificates={setCertificates}
           isEditable={isEditable}
           setIsEditing={toggleEdit}
         />
