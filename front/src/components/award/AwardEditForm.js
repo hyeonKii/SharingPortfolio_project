@@ -3,27 +3,27 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
- 
-  const [awardTitle, setAwardTitle] = useState(currentAward.awardTitle);
-  
-  const [awardDetail, setAwardDetail] = useState(currentAward.awardDetail);
-
+  // const [awardTitle, setAwardTitle] = useState(currentAward.awardTitle);
+  // const [awardDetail, setAwardDetail] = useState(currentAward.awardDetail);
+  const [awardForm,setAwardForm]=useState({
+      awardTitle: currentAward.awardTitle,
+      awardDetail: currentAward.awardDetail,
+  })
+  function handleOnchange(e){
+    const {name,value} = e.target;
+    setAwardForm(prev=>({
+     ...prev,
+     [name]:value,
+    }));
+ }
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    
     const id = currentAward.id;
-
-    
     await Api.put(`award/${currentAward.award_id}/update`, {
       id,
-      awardTitle,
-      awardDetail,
+      ...awardForm,
     });
-
-   
     const res = await Api.get("award");
-    
     setAwards(res.data);
     setIsEditing(false);
   };
@@ -34,8 +34,9 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
         <Form.Control
           type="text"
           placeholder="수상내역"
-          value={awardTitle}
-          onChange={(e) => setAwardTitle(e.target.value)}
+          name= "awardTitle"
+          value={awardForm.awardTitle}
+          onChange={handleOnchange}
         />
       </Form.Group>
 
@@ -43,8 +44,9 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
         <Form.Control
           type="text"
           placeholder="상세내역"
-          value={awardDetail}
-          onChange={(e) => setAwardDetail(e.target.value)}
+          name = "awardDetail"
+          value={awardForm.awardDetail}
+          onChange={handleOnchange}
         />
       </Form.Group>
 
