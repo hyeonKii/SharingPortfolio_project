@@ -6,8 +6,8 @@ import * as Api from "../../api";
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   //1번 수정
   const [projectForm, setProjectForm] = useState({
-    projectTitle: "",
-    projectDetail: "",
+    projTitle: "",
+    projDetail: "",
   });
   
   const [from_Date, setFrom_Date] = useState(new Date());
@@ -41,9 +41,12 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
    
     const res = await Api.get("project");
-    
+    if (!Array.isArray(res.data)) {
+      console.log("res.data is not array");
+      return;
+    }
     setProjects(res.data);
-    setIsAdding(false);
+    setIsAdding((prev) => !prev);
   };
 
   return (
@@ -52,8 +55,8 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         <Form.Control
           type="text"
           placeholder="프로젝트 제목"
-          name="projectTitle"
-          value={projectForm.projectTitle}
+          name="projTitle"
+          value={projectForm.projTitle}
           onChange={handleOnchange}
         />
       </Form.Group>
@@ -62,8 +65,8 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         <Form.Control
           type="text"
           placeholder="상세내역"
-          name="projectDetail"
-          value={projectForm.projectDetail}
+          name="projDetail"
+          value={projectForm.projDetail}
           onChange={handleOnchange}
         />
       </Form.Group>

@@ -5,9 +5,9 @@ function ProjectCard({ project, isEditable, setIsEditing }) {
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
         <Col>
-          {project.projectTitle}
+          {project.projTitle}
           <br />
-          <span className="text-muted">{project.projectDetail}</span>
+          <span className="text-muted">{project.projDetail}</span>
           <br />
           <span className="text-muted">
             {`${project.fromDate} ~ ${project.toDate}`}
