@@ -11,7 +11,7 @@ function Educations({portfolioOwnerId,isEditable }) {
 
   useEffect(() => {
     // "`users/${portfolioOwnerId}/edu`"로 GET
-    Api.get("edu").then((res) =>{
+    Api.get("edu",portfolioOwnerId).then((res) =>{
       ///front code review no.6 - res.data가 배열인지 아닌지 확인
       if(!Array.isArray(res.data)){
          console.log("res.data is not array")

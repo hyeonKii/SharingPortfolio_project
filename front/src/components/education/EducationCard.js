@@ -1,6 +1,17 @@
 import { Card, Row, Button, Col } from "react-bootstrap";
-
-function EducationCard({ edu, setIsEditing, isEditable }) {
+import * as Api from "../../api";
+function EducationCard({ edu, setIsEditing, isEditable,setEdu }) {
+  async function handleDelete(){
+      const id = edu.id
+      try{
+          await Api.delete(`edu/${edu.eduId}`);
+          const res = await Api.get("edu",id);
+          setEdu(res.data);
+      }catch(error){
+        console.log(error);
+      }
+      
+  }
   return (
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
@@ -19,6 +30,14 @@ function EducationCard({ edu, setIsEditing, isEditable }) {
               setIsEditing((position) => {
                 return !position;})}>
             편집
+          </Button>
+          <Button
+            variant="outline-danger"
+            size="sm"
+            className="mr-3"
+            onClick={handleDelete}
+            >
+            삭제
           </Button>
         </Col>
        
