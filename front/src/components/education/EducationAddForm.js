@@ -6,36 +6,39 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
   // const [school, setSchool] = useState("");
   // const [major, setMajor] = useState("");
   // const [degree, setDegree] = useState("재학중");
-  
-  const [educationForm, setEducationForm]=useState({
-      school: "",
-      major: "",
-      degree: "재학중",
-  })
-  function handleOnchange(e){
-    const {name,value} = e.target;
-    setEducationForm(prev=>({
-     ...prev,
-     [name]:value,
+
+  const [educationForm, setEducationForm] = useState({
+    school: "",
+    major: "",
+    degree: "재학중",
+  });
+  function handleOnchange(e) {
+    const { name, value } = e.target;
+    setEducationForm((prev) => ({
+      ...prev,
+      [name]: value,
     }));
- }
+  }
   const handleSubmit = async (e) => {
     // preventDefault 해주기
     e.preventDefault();
-    const id=portfolioOwnerId;  //로그인된 사용자 id
+    const id = portfolioOwnerId; //로그인된 사용자 id
     try {
       await Api.post("edu/add", {
         id,
         ...educationForm,
-       
       });
     } catch (err) {
       console.log("등록에 실패하였습니다.", err);
     }
-    
+
     const res = await Api.get("edu");
+    if (!Array.isArray(res.data)) {
+      console.log("res.data is not array");
+      return;
+    }
     setEdu(res.data);
-    setIsAdding(prev=>!prev);
+    setIsAdding((prev) => !prev);
   };
   return (
     <Form onSubmit={handleSubmit}>
@@ -52,7 +55,7 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
         <Form.Control
           type="text"
           placeholder="전공"
-          name ="major"
+          name="major"
           value={educationForm.major}
           onChange={handleOnchange}
         />
@@ -106,7 +109,10 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
           <Button variant="primary" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsAdding(prev=>!prev)}>
+          <Button
+            variant="secondary"
+            onClick={() => setIsAdding((prev) => !prev)}
+          >
             취소
           </Button>
         </Col>
