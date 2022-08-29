@@ -6,15 +6,15 @@ const ProjectSchema = new Schema(
       type: String,
       required: true,
     },
-    pro_id: {
+    projId: {
       type: String,
       required: true,
     },
-    projectTitle: {
+    projTitle: {
       type: String,
       required: true,
     },
-    projectDetail: {
+    projDetail: {
       type: String,
       required: true,
     },
