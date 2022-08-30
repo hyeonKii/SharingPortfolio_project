@@ -11,7 +11,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
    
-    Api.get("project").then((res) =>{
+    Api.get("project", portfolioOwnerId).then((res) =>{
       ///front code review no.6 - res.data가 배열인지 아닌지 확인
       if(!Array.isArray(res.data)){
          console.log("res.data is not array")

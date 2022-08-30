@@ -9,8 +9,11 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   // const [projDetail, setProjDetail] = useState(currentProject.projectDetail);
 
   const [projectForm, setProjectForm] = useState({
+    projId: currentProject.projId,
     projTitle: currentProject.projTitle,
     projDetail: currentProject.projDetail,
+    fromDate: new Date(currentProject.fromDate),
+    toDate: new Date(currentProject.toDate),
   })
   
   function handleOnchange(e) {
@@ -21,37 +24,65 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     }));
   }
 
-  const [from_Date, setFrom_Date] = useState(new Date(currentProject.fromDate));
-  const [to_Date, setTo_Date] = useState(new Date(currentProject.toDate));
+  const handleDataChange1 = (date) => {
+    setProjectForm(prev=> ({
+      ...prev,
+      fromDate: date,
+    }))
+  }
+
+  const handleDataChange2 = (date) => {
+    setProjectForm(prev=> ({
+      ...prev,
+      toDate: date,
+    }))
+  }
+
+  // const [from_Date, setFrom_Date] = useState(new Date(currentProject.fromDate));
+  // const [to_Date, setTo_Date] = useState(new Date(currentProject.toDate));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     
     const id = currentProject.id;
-    const fromDate = from_Date.toISOString().split("T")[0];
-    const toDate = to_Date.toISOString().split("T")[0];
+    // const fromDate = projectForm.from_Date.toISOString().split("T")[0];
+    // const toDate = projectForm.to_Date.toISOString().split("T")[0];
 
     try {
-    await Api.put(`project/${currentProject.projId}/update`, {
+    await Api.put(`project/${currentProject.projId}`, {
       id,
       ...projectForm,
-      fromDate,
-      toDate,
     });
+    const project = {
+      id: id,
+      projId: projectForm.projId,
+      projTitle: projectForm.projTitle,
+      projDetail: projectForm.projDetail,
+      fromDate: projectForm.fromDate.toISOString().split("T")[0],
+      toDate: projectForm.toDate.toISOString().split("T")[0],
+    }
+    setProjects((prev) => {
+      return prev.map(el => {
+        if(el.projId === project.projId) return project
+        else return el
+      })
+    });
+    setIsEditing((prev) => !prev);
   } catch (err) {
     console.log("project 편집에 실패하였습니다.", err);
   }
     
-    const res = await Api.get("project");
+    // const res = await Api.get("project");
     
-    if (!Array.isArray(res.data)) {
-      console.log("res.data is not array");
-      return;
-    }
-    setProjects(res.data);
-    setIsEditing((prev) => !prev);
+    // if (!Array.isArray(res.data)) {
+    //   console.log("res.data is not array");
+    //   return;
+    // }
+    
   };
+
+  
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -78,12 +109,12 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
       <Form.Group as={Row} className="mt-3">
         <Col xs="auto">
           <DatePicker
-            selected={from_Date}
-            onChange={(date) => setFrom_Date(date)}
+            selected={projectForm.fromDate}
+            onChange={handleDataChange1}
           />
         </Col>
         <Col xs="auto">
-          <DatePicker selected={to_Date} onChange={(date) => setTo_Date(date)} />
+          <DatePicker selected={projectForm.toDate} onChange={handleDataChange2} />
         </Col>
       </Form.Group>
 
@@ -92,7 +123,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
           <Button variant="primary" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsEditing(false)}>
+          <Button variant="secondary" onClick={() => setIsEditing((prev) => !prev)}>
             취소
           </Button>
         </Col>

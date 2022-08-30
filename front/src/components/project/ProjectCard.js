@@ -2,12 +2,19 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 
 function ProjectCard({ project, isEditable, setIsEditing, setProjects}) {
-  async function handleDelete() {
+  async function handleDelete(){
     const id = project.id
     try{
       await Api.delete(`project/${project.projId}`);
-      const res = await Api.get(`project`, id);
-      setProjects(res.data);
+      // const res = await Api.get("project", id);
+      // setProjects(res.data);
+      setProjects((arr) => {
+        const newArr = arr.filter(obj => {
+          if(obj.projId === project.projId) return false
+          else return true
+        })
+        return newArr
+      });
     }catch(error){
       console.log(error);
     }
@@ -22,7 +29,7 @@ function ProjectCard({ project, isEditable, setIsEditing, setProjects}) {
           <span className="text-muted">{project.projDetail}</span>
           <br />
           <span className="text-muted">
-            {`${project.fromDate} ~ ${project.toDate}`}
+            {`${project.fromDate.split("T")[0]} ~ ${project.toDate.split("T")[0]}`}
           </span>
         </Col>
         {isEditable && (
