@@ -28,6 +28,11 @@ class Project {
     );
     return updateProject;
   }
+
+  static async deleteOne({ projId }) {
+    const project = await ProjectModel.deleteOne({ progId });
+    return project;
+  }
 }
 
 export { Project };

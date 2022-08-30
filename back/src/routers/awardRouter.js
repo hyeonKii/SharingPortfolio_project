@@ -23,9 +23,9 @@ awardRouter.post("/award/add", login_required, async function (req, res, next) {
       awardDetail,
     });
 
-    if (newAward.errorMessage) {
-      throw new Error(newAward.errorMessage);
-    }
+    // if (newAward.errorMessage) {
+    //   throw new Error(newAward.errorMessage);
+    // }
 
     res.status(201).json(newAward);
   } catch (error) {
@@ -72,5 +72,23 @@ awardRouter.get("/award", login_required, async function (req, res, next) {
     next(error);
   }
 });
+
+awardRouter.delete(
+  "award/:awardId",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const award_id = req.params.awardId;
+      const deletedAward = await awardService.deletedAward({ award_id });
+
+      if (deletedAward.errorMessage) {
+        throw new Error(deletedAward.errorMessage);
+      }
+      res.status(200).json(deletedAward);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { awardRouter };

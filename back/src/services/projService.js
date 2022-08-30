@@ -71,6 +71,12 @@ class projectService {
 
     return project;
   }
+
+  static async deleteProject({ projId }) {
+    const project = await Project.deleteOne({ projId });
+
+    return project;
+  }
 }
 
 export { projectService };
