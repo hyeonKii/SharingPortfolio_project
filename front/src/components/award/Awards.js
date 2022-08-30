@@ -14,6 +14,10 @@ function Awards({ portfolioOwnerId, isEditable }) {
         console.log("res.data is not array");
         return;
       }
+      if(!Array.isArray(res.data)){
+        console.log("res.data is not array")
+       return;
+      }
       setAwards(res.data);
     });
   }, [portfolioOwnerId]);

@@ -6,6 +6,7 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
   // const [awardTitle, setAwardTitle] = useState(currentAward.awardTitle);
   // const [awardDetail, setAwardDetail] = useState(currentAward.awardDetail);
   const [awardForm, setAwardForm] = useState({
+    awardId: currentAward.awardId,
     awardTitle: currentAward.awardTitle,
     awardDetail: currentAward.awardDetail,
   });
@@ -24,16 +25,23 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
         id,
         ...awardForm,
       });
+      const award ={
+        id:id,
+        awardId : awardForm.awardId,
+        awardTitle : awardForm.awardTitle,
+        awardDetail: awardForm.awardDetail
+      }
+      setAwards((prev) => {
+        return prev.map(el => {
+          if(el.awardId === award.awardId) return award 
+          else return el
+        })
+      });
+      setIsEditing((prev) => !prev);
     } catch (error) {
       console.log("award편집에 실패하였습니다.", error);
     }
-    const res = await Api.get("award");
-    if (!Array.isArray(res.data)) {
-      console.log("res.data is not array");
-      return;
-    }
-    setAwards(res.data);
-    setIsEditing((prev) => !prev);
+    
   };
 
   return (

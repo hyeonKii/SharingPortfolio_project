@@ -22,21 +22,15 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
     e.preventDefault();
     const id = portfolioOwnerId;
     try {
-      await Api.post("award/add", {
+      const res =await Api.post("award/add", {
         id,
         ...awardForm,
       });
+      setAwards((prev)=>[...prev,res.data]);
+      setIsAdding((prev) => !prev);
     } catch (err) {
       console.log("등록에 실패하였습니다.", err);
     }
-
-    const res = await Api.get("award");
-    if (!Array.isArray(res.data)) {
-      console.log("res.data is not array");
-      return;
-    }
-    setAwards(res.data);
-    setIsAdding((prev) => !prev);
   };
 
   return (
