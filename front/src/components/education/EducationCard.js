@@ -5,10 +5,21 @@ function EducationCard({ edu, setIsEditing, isEditable,setEdu }) {
       const id = edu.id
       try{
           await Api.delete(`edu/${edu.eduId}`);
-          const res = await Api.get("edu",id);
-          setEdu(res.data);
+          // const res = await Api.get("edu",id);
+          // setEdu(res.data);
+          // console.log(res.data);
+          // console.log(edu.eduId);
+          setEdu((arr) => {
+            const newArr = arr.filter(obj => {
+              if(obj.eduId === edu.eduId) return false  //filter함수에서 false면 삭제됨.
+              else return true
+
+            } )
+              return newArr
+
+          });
       }catch(error){
-        console.log(error);
+        console.log("삭제에 실패했습니다.",error);
       }
       
   }

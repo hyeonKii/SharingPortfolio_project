@@ -35,19 +35,19 @@ function Educations({portfolioOwnerId,isEditable }) {
             setEdu={setEducations}
           />
         ))}
-        {isEditable && (
-          <Row className="mt-3 mb-3 text-center" >
-            <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
-            </Col>
-          </Row>
-        )}
         {isAdding && (
           <EducationAddForm
             portfolioOwnerId={portfolioOwnerId}
             setIsAdding={setIsAdding}
             setEdu={setEducations}
           />
+        )}
+        {isEditable && (
+          <Row className="mt-3 mb-3 text-center" >
+            <Col sm={{ span: 20 }}>
+              <Button onClick={() => setIsAdding(true)}>+</Button>
+            </Col>
+          </Row>
         )}
       </Card.Body>
     </Card>
