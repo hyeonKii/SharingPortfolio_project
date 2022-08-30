@@ -6,15 +6,15 @@ import * as Api from "../../api";
 
 
 function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {
-
-
   // const [certiTitle, setCertiTitle] = useState("");
   // const [certiDetail, setCertiDetail] = useState("");
-  const [certi_Date,setCerti_Date] = useState(new Date());
+  // const [certi_Date,setCerti_Date] = useState(new Date());
+
 // 1번리뷰 수정
   const [certiForm, setCertiForm] = useState({
     certiTitle: "",
     certiDetail: "",
+    certiDate: new Date()
 });
 
 function handleOnchange(e){
@@ -24,30 +24,39 @@ function handleOnchange(e){
    [name]:value,
   }));
 }
+const handleDataChange = (date) =>{
+  setCertiForm(prev=>({
+    ...prev,
+    certiDate:date,
+}));
+}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id=portfolioOwnerId;
-    const certiDate=certi_Date.toISOString().split("T")[0];
+    // const certiDate=certi_Date;
+    // const certiDate=certiForm.certi_Datecerti_Date.toISOString().split("T")[0];
     try {
-      await Api.post("certi/add", {
+      const res=await Api.post("certi/add", {
         id,
-        certiDate,
         ...certiForm,
       });
+      setCertificates((prev)=>[...prev,res.data]);
+      setIsAdding((prev) => !prev);
+      
     } catch (err) {
       console.log("등록에 실패하였습니다.", err);
     }
     
-    const res = await Api.get("certi",id);
+    // const res = await Api.get("certi",id);
     //res.data가 배열인지 확인
-    if (!Array.isArray(res.data)) {
-      console.log("res.data is not array");
-      return;
-    }
+    // if (!Array.isArray(res.data)) {
+    //   console.log("res.data is not array");
+    //   return;
+    // }
 
-    setCertificates(res.data);
-    setIsAdding(prev=>!prev);
+    // setCertificates(res.data);
+    // setIsAdding(prev=>!prev);
   };
 
   return (
@@ -75,8 +84,8 @@ function handleOnchange(e){
           <Form.Group as={Row} className="mt-3">
           <Col xs="auto">
             <DatePicker
-            selected={certi_Date} 
-            onChange={(date) => setCerti_Date(date)}
+            selected={certiForm.certiDate} 
+            onChange={handleDataChange}
           />
           </Col>
           </Form.Group>

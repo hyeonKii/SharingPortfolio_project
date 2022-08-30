@@ -7,11 +7,13 @@ import * as Api from "../../api";
 function CertiEditForm({ currentcertificate, setIsEditing, setCertificates }) {
   // const [certiTitle, setCertiTitle] = useState(currentcertificate.certiTitle);
   // const [certiDetail, setCertiDetail] = useState(currentcertificate.certiDetail);
-  const [certi_Date,setCerti_Date] = useState(new Date(currentcertificate.certiDate));
+  // const [certi_Date,setCerti_Date] = useState(new Date(currentcertificate.certiDate));
 
   const [certiForm, setCertiForm] = useState({
+    certiId:currentcertificate.certiId,
     certiTitle: currentcertificate.certiTitle,
     certiDetail: currentcertificate.certiDetail,
+    certiDate: new Date(currentcertificate.certiDate)
 });
 function handleOnchange(e) {
   const { name, value } = e.target;
@@ -20,30 +22,50 @@ function handleOnchange(e) {
     [name]: value,
   }));
 }
+const handleDataChange = (date) =>{
+  setCertiForm(prev=>({
+    ...prev,
+    certiDate:date,
+}));
+}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const id = currentcertificate.id;
-    const certiDate=certi_Date.toISOString().split("T")[0];
+    // const certiDate=certi_Date.toISOString().split("T")[0];
     //try~catch
     try{
       await Api.put(`certi/${currentcertificate.certiId}`, {
         id,
         ...certiForm,
-        certiDate,
-      });}catch(err){
+      });
+      const certi={
+        id:id,
+        certiId: certiForm.certiId,
+        certiTitle : certiForm.certiTitle,
+        certiDetail : certiForm.certiDetail,
+        certiDate : certiForm.certiDate.toISOString().split("T")[0]
+      }
+      setCertificates((prev) => {
+        return prev.map(el => {
+          if(el.certiId === certi.certiId) return certi 
+          else return el
+        })
+      });
+      setIsEditing((prev) => !prev);
+    }catch(err){
         console.log("편집에 실패하였습니다.",err);
+        // console.log(typeof(certiForm.certiDate))
       }
     
-    const res = await Api.get("certi",id);
-    // res.data가 배열인지 확인
-    if (!Array.isArray(res.data)) {
-      console.log("res.data is not array");
-      return;
-    }
-    setCertificates(res.data);
-    setIsEditing((prev)=>!prev);
+    // const res = await Api.get("certi",id);
+    // // res.data가 배열인지 확인
+    // if (!Array.isArray(res.data)) {
+    //   console.log("res.data is not array");
+    //   return;
+    // }
+    // setCertificates(res.data);
+    // setIsEditing((prev)=>!prev);
   };
 
   return (
@@ -71,8 +93,8 @@ function handleOnchange(e) {
           <Form.Group as={Row} className="mt-3">
           <Col xs="auto">
             <DatePicker
-            selected={certi_Date} 
-            onChange={(date) => setCerti_Date(date)}
+            selected={certiForm.certiDate} 
+            onChange={handleDataChange}
           />
           </Col>
           </Form.Group>
