@@ -6,10 +6,10 @@ class Award {
     return createdNewAward;
   }
 
-  static async findByEmail({ email }) {
-    const award = await AwardModel.findOne({ email });
-    return award;
-  }
+  // static async findByEmail({ email }) {
+  //   const award = await AwardModel.findOne({ email });
+  //   return award;
+  // }
 
   static async findById({ awardId }) {
     const award = await AwardModel.findOne({ awardId });
@@ -32,6 +32,11 @@ class Award {
       option
     );
     return updatedAward;
+  }
+
+  static async deleteOne({ award_id }) {
+    const award = await AwardModel.deleteOne({ awardId: award_id });
+    return award;
   }
 }
 

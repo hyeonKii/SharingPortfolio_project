@@ -82,4 +82,22 @@ projectRouter.get("/project", login_required, async function (req, res, next) {
   }
 });
 
+projectRouter.delete(
+  "/project/:projId",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const projId = req.params.projId;
+      const deletedProject = await projectService.deletedProject({ projId });
+
+      if (deletedProject.errorMessage) {
+        throw new Error(deletedProject.errorMessage);
+      }
+      res.status(200).json(deletedProject);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { projectRouter };

@@ -14,6 +14,10 @@ function Awards({ portfolioOwnerId, isEditable }) {
         console.log("res.data is not array");
         return;
       }
+      if(!Array.isArray(res.data)){
+        console.log("res.data is not array")
+       return;
+      }
       setAwards(res.data);
     });
   }, [portfolioOwnerId]);
@@ -30,19 +34,19 @@ function Awards({ portfolioOwnerId, isEditable }) {
             isEditable={isEditable}
           />
         ))}
-        {isEditable && (
-          <Row className="mt-3 text-center mb-4">
-            <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
-            </Col>
-          </Row>
-        )}
         {isAdding && (
           <AwardAddForm
             portfolioOwnerId={portfolioOwnerId}
             setAwards={setAwards}
             setIsAdding={setIsAdding}
           />
+        )}
+        {isEditable && (
+          <Row className="mt-3 text-center mb-4">
+            <Col sm={{ span: 20 }}>
+              <Button onClick={() => setIsAdding(true)}>+</Button>
+            </Col>
+          </Row>
         )}
       </Card.Body>
     </Card>
