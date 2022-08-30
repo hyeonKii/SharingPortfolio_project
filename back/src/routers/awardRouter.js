@@ -74,7 +74,7 @@ awardRouter.get("/award", login_required, async function (req, res, next) {
 });
 
 awardRouter.delete(
-  "award/:awardId",
+  "/award/:awardId",
   login_required,
   async function (req, res, next) {
     try {

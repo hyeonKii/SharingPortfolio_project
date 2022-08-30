@@ -55,7 +55,7 @@ class awardService {
     return award;
   }
 
-  static async deleteAward({ award_id }) {
+  static async deletedAward({ award_id }) {
     const award = await Award.deleteOne({ award_id });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환

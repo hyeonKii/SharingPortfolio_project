@@ -29,8 +29,8 @@ class Project {
     return updateProject;
   }
 
-  static async deleteOne({ projId }) {
-    const project = await ProjectModel.deleteOne({ progId });
+  static async deleteOne({ proj_id }) {
+    const project = await ProjectModel.deleteOne({ projId: proj_id });
     return project;
   }
 }

@@ -83,7 +83,7 @@ projectRouter.get("/project", login_required, async function (req, res, next) {
 });
 
 projectRouter.delete(
-  "project/:projId",
+  "/project/:projId",
   login_required,
   async function (req, res, next) {
     try {
