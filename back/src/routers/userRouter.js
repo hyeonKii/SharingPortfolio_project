@@ -147,6 +147,51 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
     );
 });
 
+//추가기능. 검색-name
+userAuthRouter.get(
+  "/users/search/:name",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_name = req.params.name;
+      // const user_school = req.params.school;
+      const searchUsersByName = await userAuthService.searchUsersByName({
+        user_name,
+      });
+
+      if (searchUsersByName.errorMessage) {
+        throw new Error(searchUsersByName.errorMessage);
+      }
+
+      res.status(200).send(searchUsersByName);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+// //추가기능. 검색-school
+// userAuthRouter.get(
+//   "/users/search/:school",
+//   login_required,
+//   async function (req, res, next) {
+//     try {
+//       // const user_name = req.params.name;
+//       const user_school = req.params.school;
+//       const searchUsersBySchool = await userAuthService.searchUsersBySchool({
+//         user_school,
+//       });
+
+//       if (searchUsersBySchool.errorMessage) {
+//         throw new Error(searchUsersBySchool.errorMessage);
+//       }
+
+//       res.status(200).send(searchUsersBySchool);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
 // //추가기능. 삭제
 // userAuthRouter.delete(
 //   "/users/:id",
