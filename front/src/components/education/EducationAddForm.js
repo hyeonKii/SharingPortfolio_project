@@ -24,21 +24,25 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
     e.preventDefault();
     const id = portfolioOwnerId; //로그인된 사용자 id
     try {
-      await Api.post("edu/add", {
+      const res=await Api.post("edu/add", {
         id,
         ...educationForm,
       });
+      ///수정필요
+      setEdu((prev)=>[...prev,res.data]);
+      setIsAdding((prev) => !prev);
+      ///
     } catch (err) {
       console.log("등록에 실패하였습니다.", err);
     }
 
-    const res = await Api.get("edu",id);
-    if (!Array.isArray(res.data)) {
-      console.log("res.data is not array");
-      return;
-    }
-    setEdu(res.data);
-    setIsAdding((prev) => !prev);
+    // const res = await Api.get("edu",id);
+    // if (!Array.isArray(res.data)) {
+    //   console.log("res.data is not array");
+    //   return;
+    // }
+    // setEdu(res.data);
+    
   };
   return (
     <Form onSubmit={handleSubmit}>

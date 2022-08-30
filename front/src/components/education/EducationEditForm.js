@@ -7,6 +7,7 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
   // const [major, setMajor] = useState(edu.major);
   // const [degree, setDegree] = useState(edu.degree);
   const [educationForm, setEducationForm] = useState({
+    eduId: edu.eduId,
     school: edu.school,
     major: edu.major,
     degree: edu.degree,
@@ -29,20 +30,34 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
         id,
         ...educationForm,
       });
+      const education={
+        id:id,
+        eduId: educationForm.eduId,
+        school : educationForm.school,
+        major : educationForm.major,
+        degree : educationForm.degree
+      }
+      setEdu((prev) => {
+        return prev.map(el => {
+          if(el.eduId === education.eduId) return education 
+          else return el
+        })
+      });
+      setIsEditing((prev) => !prev);
     } catch (err) {
       console.log("education편집에 실패하였습니다.", err);
     }
     // edu 정보는 response의 data임.
-    const res = await Api.get("edu");
+  //   const res = await Api.get("edu",id);
 
-    // 해당 edu 정보로 edu을 세팅함.
-    if (!Array.isArray(res.data)) {
-      console.log("res.data is not array");
-      return;
-    }
-    setEdu(res.data);
-    // isEditing을 false로 세팅함.
-    setIsEditing((prev) => !prev);
+  //   // 해당 edu 정보로 edu을 세팅함.
+  //   if (!Array.isArray(res.data)) {
+  //     console.log("res.data is not array");
+  //     return;
+  //   }
+  //   setEdu(res.data);
+  //   // isEditing을 false로 세팅함.
+  //   setIsEditing((prev) => !prev);
   };
 
   return (
