@@ -6,8 +6,8 @@ class Project {
     return createdNewProject;
   }
 
-  static async findById({ project_id }) {
-    const project = await ProjectModel.findOne({ pro_id: project_id });
+  static async findById({ projId }) {
+    const project = await ProjectModel.findOne({ projId });
     return project;
   }
 
@@ -16,8 +16,8 @@ class Project {
     return project;
   }
 
-  static async update({ project_id, fieldToUpdate, newValue }) {
-    const filter = { pro_id: project_id };
+  static async update({ projId, fieldToUpdate, newValue }) {
+    const filter = { projId };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
@@ -27,6 +27,11 @@ class Project {
       option
     );
     return updateProject;
+  }
+
+  static async deleteOne({ proj_id }) {
+    const project = await ProjectModel.deleteOne({ projId: proj_id });
+    return project;
   }
 }
 

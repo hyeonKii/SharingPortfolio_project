@@ -12,7 +12,7 @@ class Certificate {
   // }
 
   static async findById({ certificate_id }) {
-    const certi = await CertificateModel.findOne({ certi_id: certificate_id });
+    const certi = await CertificateModel.findOne({ certiId: certificate_id });
     return certi;
   }
 
@@ -22,7 +22,7 @@ class Certificate {
   }
 
   static async update({ certificate_id, fieldToUpdate, newValue }) {
-    const filter = { certi_id: certificate_id };
+    const filter = { certiId: certificate_id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
@@ -32,6 +32,12 @@ class Certificate {
       option
     );
     return updateCerti;
+  }
+
+  //주가기능 삭제
+  static async deleteOne({ certificate_id }) {
+    const certi = await CertificateModel.deleteOne({ certiId: certificate_id });
+    return certi;
   }
 }
 

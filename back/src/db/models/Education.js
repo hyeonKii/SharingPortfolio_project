@@ -12,7 +12,7 @@ class Education {
   }
 
   static async findById({ education_id }) {
-    const edu = await EducationModel.findOne({ edu_id: education_id });
+    const edu = await EducationModel.findOne({ eduId: education_id });
     return edu;
   }
 
@@ -22,7 +22,7 @@ class Education {
   }
 
   static async update({ education_id, fieldToUpdate, newValue }) {
-    const filter = { edu_id: education_id };
+    const filter = { eduId: education_id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
@@ -32,6 +32,12 @@ class Education {
       option
     );
     return updateEdu;
+  }
+
+  //주가기능 삭제
+  static async deleteOne({ education_id }) {
+    const edu = await EducationModel.deleteOne({ eduId: education_id });
+    return edu;
   }
 }
 

@@ -5,13 +5,17 @@ import Award from "./Award";
 import AwardAddForm from "./AwardAddForm";
 
 function Awards({ portfolioOwnerId, isEditable }) {
-
   const [awards, setAwards] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-  
-    Api.get("award").then((res) => setAwards(res.data));
+    Api.get("award", portfolioOwnerId).then((res) => {
+      if (!Array.isArray(res.data)) {
+        console.log("res.data is not array");
+        return;
+      }
+      setAwards(res.data);
+    });
   }, [portfolioOwnerId]);
 
   return (
@@ -20,25 +24,25 @@ function Awards({ portfolioOwnerId, isEditable }) {
         <Card.Title>수상이력</Card.Title>
         {awards.map((award) => (
           <Award
-            key={award.id}
+            key={award.awardId}
             award={award}
             setAwards={setAwards}
             isEditable={isEditable}
           />
         ))}
-        {isEditable && (
-          <Row className="mt-3 text-center mb-4">
-            <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
-            </Col>
-          </Row>
-        )}
         {isAdding && (
           <AwardAddForm
             portfolioOwnerId={portfolioOwnerId}
             setAwards={setAwards}
             setIsAdding={setIsAdding}
           />
+        )}
+        {isEditable && (
+          <Row className="mt-3 text-center mb-4">
+            <Col sm={{ span: 20 }}>
+              <Button onClick={() => setIsAdding(true)}>+</Button>
+            </Col>
+          </Row>
         )}
       </Card.Body>
     </Card>

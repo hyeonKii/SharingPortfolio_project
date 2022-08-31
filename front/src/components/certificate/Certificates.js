@@ -11,7 +11,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
     // "`users/${portfolioOwnerId}/certificate`"로 GET
-    Api.get("certi").then((res) => setCertificates(res.data));
+    Api.get("certi",portfolioOwnerId).then((res) => setCertificates(res.data));
   }, [portfolioOwnerId]);
 
   return (
@@ -21,7 +21,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
       <Card.Title>자격증</Card.Title>
           {certificates.map((certificate)=>(
             <Certificate
-            key={certificate.id}
+            key={certificate.certiId}
             certificate={certificate}
             setCertificates={setCertificates}
             isEditable={isEditable}

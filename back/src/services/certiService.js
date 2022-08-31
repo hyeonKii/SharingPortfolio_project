@@ -1,11 +1,11 @@
-import { User, Certificate } from "../db";
+import { Certificate } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class certiService {
   static async addCerti({ id, certiTitle, certiDetail, certiDate }) {
-    const certi_id = uuidv4();
+    const certiId = uuidv4();
 
-    const newCerti = { id, certi_id, certiTitle, certiDetail, certiDate };
+    const newCerti = { id, certiId, certiTitle, certiDetail, certiDate };
 
     // db에 저장
     const createdNewCerti = await Certificate.create({ newCerti });
@@ -66,6 +66,13 @@ class certiService {
         "해당 사용자는 자격증 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
+
+    return certi;
+  }
+
+  //추가기능 삭제
+  static async deletedCerti({ certificate_id }) {
+    const certi = await Certificate.deleteOne({ certificate_id });
 
     return certi;
   }

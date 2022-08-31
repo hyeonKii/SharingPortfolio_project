@@ -1,0 +1,7 @@
+.portpolioIcon{
+    color:black;
+}
+.portpolioIcon:hover{
+    color:rgb(137, 137, 241);
+    cursor: pointer;
+}

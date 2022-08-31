@@ -1,11 +1,11 @@
-import { User, Education } from "../db";
+import { Education } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class eduService {
   static async addEdu({ id, school, major, degree }) {
-    const edu_id = uuidv4();
+    const eduId = uuidv4();
 
-    const newEdu = { id, edu_id, school, major, degree };
+    const newEdu = { id, eduId, school, major, degree };
 
     // db에 저장
     const createdNewEdu = await Education.create({ newEdu });
@@ -58,6 +58,13 @@ class eduService {
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
+
+    return edu;
+  }
+
+  //추가기능 삭제
+  static async deletedEdu({ education_id }) {
+    const edu = await Education.deleteOne({ education_id });
 
     return edu;
   }

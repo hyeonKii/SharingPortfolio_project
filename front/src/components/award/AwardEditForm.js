@@ -3,29 +3,45 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
- 
-  const [awardTitle, setAwardTitle] = useState(currentAward.awardTitle);
-  
-  const [awardDetail, setAwardDetail] = useState(currentAward.awardDetail);
-
+  // const [awardTitle, setAwardTitle] = useState(currentAward.awardTitle);
+  // const [awardDetail, setAwardDetail] = useState(currentAward.awardDetail);
+  const [awardForm, setAwardForm] = useState({
+    awardId: currentAward.awardId,
+    awardTitle: currentAward.awardTitle,
+    awardDetail: currentAward.awardDetail,
+  });
+  function handleOnchange(e) {
+    const { name, value } = e.target;
+    setAwardForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    
     const id = currentAward.id;
-
+    try {
+      await Api.put(`award/${currentAward.awardId}`, {
+        id,
+        ...awardForm,
+      });
+      const award ={
+        id:id,
+        awardId : awardForm.awardId,
+        awardTitle : awardForm.awardTitle,
+        awardDetail: awardForm.awardDetail
+      }
+      setAwards((prev) => {
+        return prev.map(el => {
+          if(el.awardId === award.awardId) return award 
+          else return el
+        })
+      });
+      setIsEditing((prev) => !prev);
+    } catch (error) {
+      console.log("award편집에 실패하였습니다.", error);
+    }
     
-    await Api.put(`award/${currentAward.award_id}/update`, {
-      id,
-      awardTitle,
-      awardDetail,
-    });
-
-   
-    const res = await Api.get("award");
-    
-    setAwards(res.data);
-    setIsEditing(false);
   };
 
   return (
@@ -34,8 +50,9 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
         <Form.Control
           type="text"
           placeholder="수상내역"
-          value={awardTitle}
-          onChange={(e) => setAwardTitle(e.target.value)}
+          name="awardTitle"
+          value={awardForm.awardTitle}
+          onChange={handleOnchange}
         />
       </Form.Group>
 
@@ -43,8 +60,9 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
         <Form.Control
           type="text"
           placeholder="상세내역"
-          value={awardDetail}
-          onChange={(e) => setAwardDetail(e.target.value)}
+          name="awardDetail"
+          value={awardForm.awardDetail}
+          onChange={handleOnchange}
         />
       </Form.Group>
 
@@ -53,7 +71,10 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
           <Button variant="primary" type="submit" className="me-3">
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsEditing(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setIsEditing((prev) => !prev)}
+          >
             취소
           </Button>
         </Col>
