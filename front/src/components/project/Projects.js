@@ -30,23 +30,23 @@ function Projects({ portfolioOwnerId, isEditable }) {
           <Project
             key={project.projId}
             project={project}
-            setProjects={setProjects}
             isEditable={isEditable}
+            setProjects={setProjects}
           />
         ))}
-        {isEditable && (
-          <Row className="mt-3 text-center mb-4">
-            <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
-            </Col>
-          </Row>
-        )}
         {isAdding && (
           <ProjectAddForm
             portfolioOwnerId={portfolioOwnerId}
             setProjects={setProjects}
             setIsAdding={setIsAdding}
           />
+        )}
+        {isEditable && (
+          <Row className="mt-3 text-center mb-4">
+            <Col sm={{ span: 20 }}>
+              <Button onClick={() => setIsAdding(true)}>+</Button>
+            </Col>
+          </Row>
         )}
       </Card.Body>
     </Card>
