@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TbClipboardText } from "react-icons/tb";
-
+import "./User.css"
 function UserTable({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
   return (
@@ -13,7 +13,7 @@ function UserTable({ user, setIsEditing, isEditable, isNetwork }) {
         <th>{user?.description}</th>
         {isNetwork && (
           <th style={{ display: "flex", justifyContent: "center" }}>
-            <div >
+            <div className="portpolioIcon">
               <TbClipboardText
                 href="#"
                 onClick={() => navigate(`/users/${user.id}`)}

@@ -9,11 +9,17 @@ import {
   Col,
   Table,
 } from "react-bootstrap";
-
+import {
+  TbLayoutGrid,
+  TbMenu2,
+  TbTriangle,
+  TbTriangleInverted,
+} from "react-icons/tb";
 import * as Api from "../../api";
 import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
 import UserTable from "./UserTable";
+import "./Network.css";
 function Network() {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
@@ -21,8 +27,23 @@ function Network() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [showCard, setShowCard] = useState(true);
+
   function toggleShow() {
     setShowCard(!showCard);
+  }
+  function sortByNameAsc() {
+    let newUserNameArray = [...users];
+    newUserNameArray = newUserNameArray.sort(
+      (a, b) => -a.name.localeCompare(b.name)
+    );
+    setUsers(newUserNameArray);
+  }
+  function sortByNameDesc() {
+    let newUserNameArray = [...users];
+    newUserNameArray = newUserNameArray.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    setUsers(newUserNameArray);
   }
 
   useEffect(() => {
@@ -38,10 +59,11 @@ function Network() {
   return (
     <>
       <Container>
-        <Row>
+        <Row className="justify-content-md-center">
           <Col md={{ span: 1, offset: 5 }}>
-            <Form className="mb-3 ms-3 mr-10">
+            <Form className="mb-3">
               <input
+                className="search-name"
                 type="text"
                 value={search}
                 placeholder="검색"
@@ -54,23 +76,35 @@ function Network() {
               <Button
                 variant="secondary"
                 onClick={toggleShow}
-                style={showCard ? { color: "navy" } : { color: "white" }}
+                style={
+                  showCard
+                    ? { backgroundColor: "gray" }
+                    : { backgroundColor: "white" }
+                }
               >
-                Card
+                <TbLayoutGrid
+                  style={showCard ? { color: "white" } : { color: "black" }}
+                />
               </Button>
               <Button
                 variant="secondary"
                 onClick={toggleShow}
-                style={!showCard ? { color: "navy" } : { color: "white" }}
+                style={
+                  !showCard
+                    ? { backgroundColor: "gray" }
+                    : { backgroundColor: "white" }
+                }
               >
-                Table
+                <TbMenu2
+                  style={!showCard ? { color: "white" } : { color: "black" }}
+                />
               </Button>
             </ButtonGroup>
           </Col>
         </Row>
       </Container>
       {showCard ? (
-        <Container fluid>
+        <Container fixed>
           <Row xs="auto" className="justify-content-md-center">
             {users
               .filter((data) => {
@@ -86,12 +120,24 @@ function Network() {
           </Row>
         </Container>
       ) : (
-        <Container fluid="md">
-          <Table className="mb-2 ms-3 mr-5" style={{ textAlign: "center" }}>
-            <thead>
+        <Container fixed>
+          <Table className="network-table justify-content-md-center">
+            <thead className="table-header">
               <tr>
                 <th>No</th>
-                <th>Name</th>
+                <th>
+                  Name
+                  <span style={{ marginLeft: "10px" }}>
+                    <TbTriangle
+                      className="triangle-btn-asc"
+                      onClick={sortByNameAsc}
+                    />
+                    <TbTriangleInverted
+                      className="triangle-btn-desc"
+                      onClick={sortByNameDesc}
+                    />
+                  </span>
+                </th>
                 <th>Email</th>
                 <th>Description</th>
                 <th>Portfolio</th>
