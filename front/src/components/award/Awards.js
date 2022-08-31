@@ -9,14 +9,10 @@ function Awards({ portfolioOwnerId, isEditable }) {
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    Api.get("award").then((res) => {
+    Api.get("award", portfolioOwnerId).then((res) => {
       if (!Array.isArray(res.data)) {
         console.log("res.data is not array");
         return;
-      }
-      if(!Array.isArray(res.data)){
-        console.log("res.data is not array")
-       return;
       }
       setAwards(res.data);
     });

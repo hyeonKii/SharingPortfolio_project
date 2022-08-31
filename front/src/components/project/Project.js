@@ -4,7 +4,7 @@ import ProjectEditForm from "./ProjectEditForm";
 
 function Project({ project, setProjects, isEditable }) {
   //useState로 isEditing 상태를 생성함.
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState("");
    ///front code review no.2
    const toggleEdit = () => {
     setIsEditing((prev) => !prev);
@@ -20,6 +20,7 @@ function Project({ project, setProjects, isEditable }) {
       ) : (
         <ProjectCard
           project={project}
+          setProjects={setProjects}
           isEditable={isEditable}
           setIsEditing={toggleEdit}
         />
