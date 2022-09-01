@@ -27,6 +27,7 @@ function User({ portfolioOwnerId, isEditable }) {
           user={user}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
+
         />
       )}
     </>
