@@ -4,7 +4,7 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
-
+import "../components.css";
 function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
@@ -61,54 +61,75 @@ function LoginForm() {
 
   return (
     <Container>
+      <div className="content">
+        <pre>
+          {`
+
+  ██╗        ██╗    ██╗  
+ ██╔╝       ██╔╝    ╚██╗ 
+██╔╝       ██╔╝      ╚██╗
+╚██╗      ██╔╝       ██╔╝
+ ╚██╗    ██╔╝       ██╔╝ 
+  ╚═╝    ╚═╝        ╚═╝  
+ `}
+        </pre>
+      </div>
       <Row className="justify-content-md-center mt-5">
         <Col lg={8}>
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="loginEmail">
-              <Form.Label>이메일 주소</Form.Label>
-              <Form.Control
-                type="email"
-                autoComplete="on"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {!isEmailValid && (
-                <Form.Text className="text-success">
-                  이메일 형식이 올바르지 않습니다.
-                </Form.Text>
-              )}
-            </Form.Group>
+            <div className="form-login">
+              <Form.Group controlId="loginEmail">
+                <Form.Control
+                  type="email"
+                  autoComplete="on"
+                  value={email}
+                  placeholder="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {!isEmailValid && (
+                  <div className="message">
+                    이메일 형식이 올바르지 않습니다.
+                  </div>
+                )}
+              </Form.Group>
 
-            <Form.Group controlId="loginPassword" className="mt-3">
-              <Form.Label>비밀번호</Form.Label>
-              <Form.Control
-                type="password"
-                autoComplete="on"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {!isPasswordValid && (
-                <Form.Text className="text-success">
-                  비밀번호는 4글자 이상입니다.
-                </Form.Text>
-              )}
-            </Form.Group>
+              <Form.Group controlId="loginPassword" className="mt-3">
+                <Form.Control
+                  type="password"
+                  autoComplete="on"
+                  value={password}
+                  placeholder="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {!isPasswordValid && (
+                  <div className="message">
+                    비밀번호는 4글자 이상입니다.
+                  </div>
+                )}
+              </Form.Group>
 
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button variant="primary" type="submit" disabled={!isFormValid}>
-                  로그인
-                </Button>
-              </Col>
-            </Form.Group>
+              <Form.Group as={Row} className="mt-3 text-center">
+                <Col sm={{ span: 20 }}>
+                  <button
+                    className="sign-in"
+                    type="submit"
+                    disabled={!isFormValid}
+                  >
+                    로그인
+                  </button>
+                </Col>
+              </Form.Group>
 
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button variant="light" onClick={() => navigate("/register")}>
-                  회원가입하기
-                </Button>
-              </Col>
-            </Form.Group>
+              <Form.Group as={Row} className="mt-3 text-center">
+                <Col sm={{ span: 20 }}>
+                  <button 
+                  className="sign-up"
+                  onClick={() => navigate("/register")}>
+                    회원가입하기
+                  </button>
+                </Col>
+              </Form.Group>
+            </div>
           </Form>
         </Col>
       </Row>

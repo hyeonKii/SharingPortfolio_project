@@ -1,13 +1,11 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TbClipboardText } from "react-icons/tb";
-import "./User.css"
-function UserTable({ user, setIsEditing, isEditable, isNetwork }) {
+import "../components.css";
+function UserTable({ user, isNetwork }) {
   const navigate = useNavigate();
   return (
     <tbody>
       <tr>
-        <th></th>
         <th>{user?.name}</th>
         <th>{user?.email}</th>
         <th>{user?.description}</th>

@@ -1,6 +1,6 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
-function AwardCard({ award, isEditable, setIsEditing ,setAwards}) {
+function AwardCard({ award, isEditable, setIsEditing, setAwards }) {
   async function handleDelete() {
     const id = award.id;
     try {
@@ -20,29 +20,29 @@ function AwardCard({ award, isEditable, setIsEditing ,setAwards}) {
   return (
     <Card.Text>
       <Row className="align-items-center">
-        <Col>
+        <Col sm={10}>
           <span>{award.awardTitle}</span>
           <br />
           <span className="text-muted">{award.awardDetail}</span>
-        </Col>
+        </Col> 
         {isEditable && (
-          <Col xs lg="1">
+          <Col sm={2}>
             <Button
               variant="outline-info"
               size="sm"
               onClick={() => setIsEditing((prev) => !prev)}
-              className="mr-3"
+              className="mr-3 me-2"
             >
               편집
             </Button>
             <Button
-            variant="outline-danger"
-            size="sm"
-            className="mr-3"
-            onClick={handleDelete}
+              variant="outline-danger"
+              size="sm"
+              className="mr-3"
+              onClick={handleDelete}
             >
-            삭제
-          </Button>
+              삭제
+            </Button>
           </Col>
         )}
       </Row>

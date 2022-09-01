@@ -3,10 +3,6 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 //get:조회 post:등록 put:수정
 function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
-  // const [school, setSchool] = useState("");
-  // const [major, setMajor] = useState("");
-  // const [degree, setDegree] = useState("재학중");
-
   const [educationForm, setEducationForm] = useState({
     school: "",
     major: "",
@@ -24,25 +20,15 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
     e.preventDefault();
     const id = portfolioOwnerId; //로그인된 사용자 id
     try {
-      const res=await Api.post("edu/add", {
+      const res = await Api.post("edu/add", {
         id,
         ...educationForm,
       });
-      ///수정필요
-      setEdu((prev)=>[...prev,res.data]);
+      setEdu((prev) => [...prev, res.data]);
       setIsAdding((prev) => !prev);
-      ///
     } catch (err) {
       console.log("등록에 실패하였습니다.", err);
     }
-
-    // const res = await Api.get("edu",id);
-    // if (!Array.isArray(res.data)) {
-    //   console.log("res.data is not array");
-    //   return;
-    // }
-    // setEdu(res.data);
-    
   };
   return (
     <Form onSubmit={handleSubmit}>
@@ -110,15 +96,15 @@ function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {
       </Form.Group>
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
-          <Button variant="primary" type="submit" className="me-3">
+          <button className="edit-btn me-3" type="submit">
             확인
-          </Button>
-          <Button
-            variant="secondary"
+          </button>
+          <button
+            className="edit-cancel-btn"
             onClick={() => setIsAdding((prev) => !prev)}
           >
             취소
-          </Button>
+          </button>
         </Col>
       </Form.Group>
     </Form>

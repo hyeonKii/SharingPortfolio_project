@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
+import {Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
-
+import "../components.css";
 function UserEditForm({ user, setIsEditing, setUser }) {
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
@@ -29,7 +29,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   };
 
   return (
-    <Card className="mb-2">
+    <Card className="profile-card">
       <Card.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="useEditName" className="mb-3">
@@ -61,12 +61,15 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
           <Form.Group as={Row} className="mt-3 text-center">
             <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3">
+              <button className="edit-btn me-3" type="submit">
                 확인
-              </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
+              </button>
+              <button
+                className="edit-cancel-btn"
+                onClick={() => setIsEditing(false)}
+              >
                 취소
-              </Button>
+              </button>
             </Col>
           </Form.Group>
         </Form>

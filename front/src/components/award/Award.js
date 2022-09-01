@@ -4,11 +4,9 @@ import AwardEditForm from "./AwardEditForm";
 
 function Award({ award, setAwards, isEditable }) {
   const [isEditing, setIsEditing] = useState("");
-  ///front code review no.2
   const toggleEdit = () => {
     setIsEditing((prev) => !prev);
   };
-  /// setIsEditing={}도 수정
   return (
     <>
       {isEditing ? (
@@ -22,7 +20,7 @@ function Award({ award, setAwards, isEditable }) {
           award={award}
           isEditable={isEditable}
           setIsEditing={toggleEdit}
-          setAwards = {setAwards}
+          setAwards={setAwards}
         />
       )}
     </>

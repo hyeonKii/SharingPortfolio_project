@@ -1,0 +1,24 @@
+.navbar {
+  color: rgb(178, 143, 143);
+  text-decoration: none;
+  font: 20px Raleway;
+  margin: 0px 10px;
+  padding: 10px 10px;
+  position: relative;
+  z-index: 0;
+  cursor: pointer;
+}
+.navbar:before {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  left: 0px;
+  bottom: 0px;
+  content: "";
+  background: rgb(204, 226, 125);
+  opacity: 0.3;
+  transition: all 0.3s;
+}
+.navbar:hover:before {
+  height: 100%;
+}

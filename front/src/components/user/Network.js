@@ -124,7 +124,6 @@ function Network() {
           <Table className="network-table justify-content-md-center">
             <thead className="table-header">
               <tr>
-                <th>No</th>
                 <th>
                   Name
                   <span style={{ marginLeft: "10px" }}>

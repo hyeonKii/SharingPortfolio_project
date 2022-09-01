@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { Button, Form, Col, Row } from "react-bootstrap";
+import {Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function EducationEditForm({ edu, setIsEditing, setEdu }) {
-  // const [school, setSchool] = useState(edu.school);
-  // const [major, setMajor] = useState(edu.major);
-  // const [degree, setDegree] = useState(edu.degree);
   const [educationForm, setEducationForm] = useState({
     eduId: edu.eduId,
     school: edu.school,
@@ -20,44 +17,31 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
     }));
   }
   const handleSubmit = async (e) => {
-    // preventDefault 해주기
     e.preventDefault();
 
     const id = edu.id; //id는 사용자 id
     try {
       await Api.put(`edu/${edu.eduId}`, {
-        ///users/:id/edu/:edu_id/update
         id,
         ...educationForm,
       });
-      const education={
-        id:id,
+      const education = {
+        id: id,
         eduId: educationForm.eduId,
-        school : educationForm.school,
-        major : educationForm.major,
-        degree : educationForm.degree
-      }
+        school: educationForm.school,
+        major: educationForm.major,
+        degree: educationForm.degree,
+      };
       setEdu((prev) => {
-        return prev.map(el => {
-          if(el.eduId === education.eduId) return education 
-          else return el
-        })
+        return prev.map((el) => {
+          if (el.eduId === education.eduId) return education;
+          else return el;
+        });
       });
       setIsEditing((prev) => !prev);
     } catch (err) {
       console.log("education편집에 실패하였습니다.", err);
     }
-    // edu 정보는 response의 data임.
-  //   const res = await Api.get("edu",id);
-
-  //   // 해당 edu 정보로 edu을 세팅함.
-  //   if (!Array.isArray(res.data)) {
-  //     console.log("res.data is not array");
-  //     return;
-  //   }
-  //   setEdu(res.data);
-  //   // isEditing을 false로 세팅함.
-  //   setIsEditing((prev) => !prev);
   };
 
   return (
@@ -126,15 +110,15 @@ function EducationEditForm({ edu, setIsEditing, setEdu }) {
       </Form.Group>
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
-          <Button variant="primary" type="submit" className="me-3">
+          <button className="edit-btn me-3" type="submit">
             확인
-          </Button>
-          <Button
-            variant="secondary"
+          </button>
+          <button
+            className="edit-cancel-btn"
             onClick={() => setIsEditing((prev) => !prev)}
           >
             취소
-          </Button>
+          </button>
         </Col>
       </Form.Group>
     </Form>

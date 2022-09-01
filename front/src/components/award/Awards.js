@@ -3,7 +3,7 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import Award from "./Award";
 import AwardAddForm from "./AwardAddForm";
-
+import "../components.css"
 function Awards({ portfolioOwnerId, isEditable }) {
   const [awards, setAwards] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
@@ -19,7 +19,7 @@ function Awards({ portfolioOwnerId, isEditable }) {
   }, [portfolioOwnerId]);
 
   return (
-    <Card>
+    <Card className="award-mvp">
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
         {awards.map((award) => (
@@ -40,7 +40,7 @@ function Awards({ portfolioOwnerId, isEditable }) {
         {isEditable && (
           <Row className="mt-3 text-center mb-4">
             <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
+              <Button variant="outline-success" onClick={() => setIsAdding(true)}>+</Button>
             </Col>
           </Row>
         )}
