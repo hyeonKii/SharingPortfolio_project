@@ -107,7 +107,7 @@ function Network() {
         </Row>
       </Container>
       {showCard ? (
-        <Container fixed>
+        <Container fluid="md">
           <CardCount count={users.filter((data) => {if(data.name.includes(search)) return data}).length}/>
           <Row xs="auto" className="justify-content-md-center">
             {users
@@ -125,7 +125,7 @@ function Network() {
           </Row>
         </Container>
       ) : (
-        <Container fixed>
+        <Container fluid="md">
           <CardCount count={users.filter((data) => {if(data.name.includes(search)) return data}).length}/>
           <Table className="network-table justify-content-md-center">
             <thead className="table-header">
