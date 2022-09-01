@@ -13,7 +13,6 @@ function UserTable({ user, isNetwork }) {
           <th style={{ display: "flex", justifyContent: "center" }}>
             <div className="portpolioIcon">
               <TbClipboardText
-                href="#"
                 onClick={() => navigate(`/users/${user.id}`)}
               />
             </div>
