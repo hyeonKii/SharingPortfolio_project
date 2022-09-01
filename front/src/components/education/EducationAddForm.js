@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Col, Row } from "react-bootstrap";
+import {Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 //get:조회 post:등록 put:수정
 function EducationAddForm({ portfolioOwnerId, setIsAdding, setEdu }) {

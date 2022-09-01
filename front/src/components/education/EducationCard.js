@@ -2,7 +2,6 @@ import { Card, Row, Button, Col } from "react-bootstrap";
 import * as Api from "../../api";
 function EducationCard({ edu, setIsEditing, isEditable, setEdu }) {
   async function handleDelete() {
-    const id = edu.id;
     try {
       await Api.delete(`edu/${edu.eduId}`);
       setEdu((arr) => {

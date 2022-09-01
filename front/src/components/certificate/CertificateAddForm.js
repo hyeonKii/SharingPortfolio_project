@@ -1,7 +1,7 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from "react";
-import { Button, Form, Col, Row } from "react-bootstrap";
+import {Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function CertifiAddForm({ portfolioOwnerId, setIsAdding, setCertificates }) {

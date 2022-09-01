@@ -113,6 +113,7 @@ function Network() {
                 } else if (data.name.includes(search)) {
                   return data;
                 }
+                return ;
               })
               .map((user) => {
                 return <UserCard key={user.id} user={user} isNetwork />;
@@ -149,6 +150,7 @@ function Network() {
                 } else if (data.name.includes(search)) {
                   return data;
                 }
+                return ;
               })
               .map((user) => {
                 return <UserTable key={user.id} user={user} isNetwork />;

@@ -3,7 +3,6 @@ import * as Api from "../../api";
 
 function certificateCard({certificate, isEditable, setIsEditing, setCertificates}) {
   async function handleDelete() {
-    const id = certificate.id;
     try {
       await Api.delete(`certi/${certificate.certiId}`);
       setCertificates((arr) => {

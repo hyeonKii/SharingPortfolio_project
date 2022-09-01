@@ -2,7 +2,6 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 function AwardCard({ award, isEditable, setIsEditing, setAwards }) {
   async function handleDelete() {
-    const id = award.id;
     try {
       await Api.delete(`award/${award.awardId}`);
       setAwards((arr) => {

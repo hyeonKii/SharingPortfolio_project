@@ -32,11 +32,10 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
             </Row>
           </Col>
         )}
-
         {isNetwork && (
           <Card.Link
             className="mt-3"
-            href="#"
+            style={{cursor:"pointer"}}
             onClick={() => navigate(`/users/${user.id}`)}
           >
             포트폴리오

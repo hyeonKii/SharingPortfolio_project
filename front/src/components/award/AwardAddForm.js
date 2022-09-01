@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Col, Row } from "react-bootstrap";
+import {Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
