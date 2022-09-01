@@ -21,3 +21,14 @@
     cursor: pointer;
     color: #bad9ed;
 }
+
+.Text{
+    width: 100%;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    color: #151618;
+    box-shadow: inset 0px -1px 0px #aaacaa;
+    padding: 12px 0;
+    margin-bottom: 12px;
+}

@@ -45,6 +45,9 @@ function Network() {
     );
     setUsers(newUserNameArray);
   }
+  function CardCount({count}) {
+    return <p className="Text">전체 {count}개</p>
+  }
 
   useEffect(() => {
     // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
@@ -105,6 +108,7 @@ function Network() {
       </Container>
       {showCard ? (
         <Container fixed>
+          <CardCount count={users.filter((data) => {if(data.name.includes(search)) return data}).length}/>
           <Row xs="auto" className="justify-content-md-center">
             {users
               .filter((data) => {
@@ -122,6 +126,7 @@ function Network() {
         </Container>
       ) : (
         <Container fixed>
+          <CardCount count={users.filter((data) => {if(data.name.includes(search)) return data}).length}/>
           <Table className="network-table justify-content-md-center">
             <thead className="table-header">
               <tr>
