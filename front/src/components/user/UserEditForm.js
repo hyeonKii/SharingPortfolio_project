@@ -53,18 +53,18 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     <Card className="profile-card">
       <Card.Body>
         <Form onSubmit={handleSubmit}>
-        { profileImageFilename ?
+        { fileprevImage ?
           <Card.Img
             style={{ width: "10rem", height: "8rem" }}
             className="mb-3"
             src={`${fileprevImage}`}
-            alt="사용자 등록 프로필 이미지"
+            alt="사용자 업로드 프로필 이미지"
           />:
           <Card.Img
               style={{ width: "10rem", height: "8rem" }}
               className="mb-3"
-              src="http://placekitten.com/200/200"
-              alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+              src={`http://localhost:5001/${user?.profileImageFilename}`}
+              alt="사용자 등록 프로필 이미지"
             />
         }
           <Form.Group controlId="userEditProfileImage" className="mb-3">
