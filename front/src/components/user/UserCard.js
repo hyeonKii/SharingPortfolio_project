@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Card, Row, Button, Col } from "react-bootstrap";
-
+import { Card, Row, Col } from "react-bootstrap";
+import "../components.css";
 //test
 // import profileImageFilename from "/back/uploads";
 
@@ -16,7 +16,7 @@ function UserCard({
   const navigate = useNavigate();
 
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
+    <Card className="mb-2 ms-3 mr-5 profile-card" style={{ width: "18rem" }}>
       <Card.Body>
         <Row className="justify-content-md-center">
           {user?.profileImageFilename ? (
@@ -43,13 +43,12 @@ function UserCard({
           <Col>
             <Row className="mt-3 text-center text-info">
               <Col sm={{ span: 20 }}>
-                <Button
-                  variant="outline-info"
-                  size="sm"
+                <button
+                  className="edit-btn"
                   onClick={() => setIsEditing(true)}
                 >
                   편집
-                </Button>
+                </button>
               </Col>
             </Row>
           </Col>
