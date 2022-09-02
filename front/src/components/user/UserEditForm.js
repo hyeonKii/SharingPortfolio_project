@@ -11,22 +11,24 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   const [description, setDescription] = useState(user.description);
   // const [uploadstate,setUploadState]=useState(false)
   //useState로 profileImageUrl 상태를 생성함
-  const [profileImageFilename, setprofileImageFilename] = useState(user.profileImageFilename);
+  const [profileImageFilename, setprofileImageFilename] = useState(
+    user.profileImageFilename
+  );
   //파일 미리볼 url을 저장해줄 state
   const [fileprevImage, setFileprevImage] = useState("");
- // 파일 정보 저장
+  // 파일 정보 저장
   const setFilepreviewImage = (e) => {
-  setFileprevImage(URL.createObjectURL(e.target.files[0]));
-};
+    setFileprevImage(URL.createObjectURL(e.target.files[0]));
+  };
 
   const upload = async (e) => {
     const formData = new FormData();
-    formData.append('file', e.target.files[0]);
-    const res = await Api.upload('user/profile', `${user.id}`, formData);
+    formData.append("file", e.target.files[0]);
+    const res = await Api.upload("user/profile", `${user.id}`, formData);
     const impageUpload = await res;
     setprofileImageFilename(impageUpload);
-    setFilepreviewImage(e)
-  }
+    setFilepreviewImage(e);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +43,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;
     //res.data에 profileImageFilename이 null값으로 나옴
-    console.log(res.data)
+    console.log(res.data);
     // 해당 유저 정보로 user을 세팅함.
     setUser(updatedUser);
 
@@ -53,20 +55,21 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     <Card className="profile-card">
       <Card.Body>
         <Form onSubmit={handleSubmit}>
-        { fileprevImage ?
-          <Card.Img
-            style={{ width: "10rem", height: "8rem" }}
-            className="mb-3"
-            src={`${fileprevImage}`}
-            alt="사용자 업로드 프로필 이미지"
-          />:
-          <Card.Img
+          {fileprevImage ? (
+            <Card.Img
               style={{ width: "10rem", height: "8rem" }}
               className="mb-3"
-              src={`http://localhost:5001/${user?.profileImageFilename}`}
+              src={`${fileprevImage}`}
+              alt="사용자 업로드 프로필 이미지"
+            />
+          ) : (
+            <Card.Img
+              style={{ width: "10rem", height: "8rem" }}
+              className="mb-3"
+              src={`http://kdt-ai5-team11.elicecoding.com:5001/${user?.profileImageFilename}`}
               alt="사용자 등록 프로필 이미지"
             />
-        }
+          )}
           <Form.Group controlId="userEditProfileImage" className="mb-3">
             <Form.Control
               type="file"
@@ -109,9 +112,9 @@ function UserEditForm({ user, setIsEditing, setUser }) {
               <button className="edit-btn me-3" type="submit">
                 확인
               </button>
-              <button 
-               className="edit-cancel-btn"
-               onClick={() => setIsEditing(false)}
+              <button
+                className="edit-cancel-btn"
+                onClick={() => setIsEditing(false)}
               >
                 취소
               </button>
