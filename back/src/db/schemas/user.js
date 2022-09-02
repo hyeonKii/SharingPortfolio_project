@@ -25,8 +25,8 @@ const UserSchema = new Schema(
     },
     profileImageFilename: {
       type: String,
-      required: false,
-      default: null,
+      required: true,
+      default:"./test.jpg",
     },
   },
   {
