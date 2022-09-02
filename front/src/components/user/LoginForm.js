@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Col, Row, Form} from "react-bootstrap";
+import { Container, Col, Row, Form } from "react-bootstrap";
 
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
@@ -55,7 +55,7 @@ function LoginForm() {
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
     } catch (err) {
-      console.log("로그인에 실패하였습니다.\n", err);
+      alert("로그인에 실패하였습니다.\n", err);
     }
   };
 
@@ -102,9 +102,7 @@ function LoginForm() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 {!isPasswordValid && (
-                  <div className="message">
-                    비밀번호는 4글자 이상입니다.
-                  </div>
+                  <div className="message">비밀번호는 4글자 이상입니다.</div>
                 )}
               </Form.Group>
 
@@ -122,9 +120,10 @@ function LoginForm() {
 
               <Form.Group as={Row} className="mt-3 text-center">
                 <Col sm={{ span: 20 }}>
-                  <button 
-                  className="sign-up"
-                  onClick={() => navigate("/register")}>
+                  <button
+                    className="sign-up"
+                    onClick={() => navigate("/register")}
+                  >
                     회원가입하기
                   </button>
                 </Col>
