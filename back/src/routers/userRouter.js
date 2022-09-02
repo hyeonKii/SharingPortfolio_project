@@ -3,7 +3,30 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 
+import { upload } from "../middlewares/imageUpload";
+
 const userAuthRouter = Router();
+
+userAuthRouter.post(
+  "/user/profile/:id",
+  upload.single("file"),
+  async function (req, res, next) {
+    try {
+      const profileImageFilename = req.file.filename;
+      res.status(200).json(profileImageFilename);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+// userAuthRouter.post("/user/upload/:id", upload.single('file'), (req, res, next) => {
+//   try {
+//     res.status(201).json(true);
+//   } catch (e) {
+//     next(e);
+//   }
+// });
 
 userAuthRouter.post("/user/register", async function (req, res, next) {
   try {
@@ -103,7 +126,15 @@ userAuthRouter.put(
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
 
-      const toUpdate = { name, email, password, description };
+      const profileImageFilename = req.body.profileImageFilename ?? null;
+
+      const toUpdate = {
+        name,
+        email,
+        password,
+        description,
+        profileImageFilename,
+      };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
@@ -146,5 +177,70 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
       `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
     );
 });
+
+//추가기능. 검색-name
+userAuthRouter.get(
+  "/users/search/:name",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_name = req.params.name;
+      // const user_school = req.params.school;
+      const searchUsersByName = await userAuthService.searchUsersByName({
+        user_name,
+      });
+
+      if (searchUsersByName.errorMessage) {
+        throw new Error(searchUsersByName.errorMessage);
+      }
+
+      res.status(200).send(searchUsersByName);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+// //추가기능. 검색-school
+// userAuthRouter.get(
+//   "/users/search/:school",
+//   login_required,
+//   async function (req, res, next) {
+//     try {
+//       // const user_name = req.params.name;
+//       const user_school = req.params.school;
+//       const searchUsersBySchool = await userAuthService.searchUsersBySchool({
+//         user_school,
+//       });
+
+//       if (searchUsersBySchool.errorMessage) {
+//         throw new Error(searchUsersBySchool.errorMessage);
+//       }
+
+//       res.status(200).send(searchUsersBySchool);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
+// //추가기능. 삭제
+// userAuthRouter.delete(
+//   "/users/:id",
+//   login_required,
+//   async function (req, res, next) {
+//     try {
+//       const user_id = req.params.id;
+//       const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+
+//       if (currentUserInfo.errorMessage) {
+//         throw new Error(currentUserInfo.errorMessage);
+//       }
+
+//       res.status(200).send(currentUserInfo);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
 
 export { userAuthRouter };

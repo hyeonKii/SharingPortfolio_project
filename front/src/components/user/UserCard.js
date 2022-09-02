@@ -1,18 +1,39 @@
 import { useNavigate } from "react-router-dom";
-import { Card, Row, Button, Col } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
+import "../components.css";
+//test
+// import profileImageFilename from "/back/uploads";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+//test
+
+function UserCard({
+  user,
+  setIsEditing,
+  isEditable,
+  isNetwork,
+  profileImageFilename,
+}) {
   const navigate = useNavigate();
+
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
+    <Card className="mb-2 ms-3 mr-5 profile-card" style={{ width: "18rem" }}>
       <Card.Body>
         <Row className="justify-content-md-center">
-          <Card.Img
-            style={{ width: "10rem", height: "8rem" }}
-            className="mb-3"
-            src="http://placekitten.com/200/200"
-            alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
-          />
+          {user?.profileImageFilename ? (
+            <Card.Img
+              style={{ width: "10rem", height: "8rem" }}
+              className="mb-3"
+              src={`http://localhost:5001/${user?.profileImageFilename}`}
+              alt="사용자 등록 프로필 이미지"
+            />
+          ) : (
+            <Card.Img
+              style={{ width: "10rem", height: "8rem" }}
+              className="mb-3"
+              src="http://placekitten.com/200/200"
+              alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+            />
+          )}
         </Row>
         <Card.Title>{user?.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
@@ -22,13 +43,12 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
           <Col>
             <Row className="mt-3 text-center text-info">
               <Col sm={{ span: 20 }}>
-                <Button
-                  variant="outline-info"
-                  size="sm"
+                <button
+                  className="edit-btn"
                   onClick={() => setIsEditing(true)}
                 >
                   편집
-                </Button>
+                </button>
               </Col>
             </Row>
           </Col>

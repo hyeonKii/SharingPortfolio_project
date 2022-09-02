@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js --exec babel-node",
-    "test": "jest --setupFiles dotenv/config"
+    "test": "jest --setupFiles dotenv/config",
+    "pm2": "pm2 start index.js --interpreter babel-node"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "jest": "^27.3.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.1",
+    "multer": "^1.4.5-lts.1",
     "supertest": "^6.1.6",
     "uuid": "^8.3.2"
   },
@@ -36,7 +38,7 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.4",
     "dotenv": "^16.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.19"
   },
   "jest": {
     "testEnvironment": "node",

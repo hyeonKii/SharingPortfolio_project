@@ -21,6 +21,16 @@ class User {
     return users;
   }
 
+  static async findByName({ user_name }) {
+    const users = await UserModel.find({ name: user_name });
+    return users;
+  }
+
+  // static async findBySchool({ user_school }) {
+  //   const users = await UserModel.find({ school: user_school });
+  //   return users;
+  // }
+
   static async update({ user_id, fieldToUpdate, newValue }) {
     const filter = { id: user_id };
     const update = { [fieldToUpdate]: newValue };
