@@ -20,19 +20,13 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     }));
   }
 
-  const handleDataChange1 = (date) => {
-    setProjectForm((prev) => ({
+  const handleDateChange = (date, name) => {
+    setProjectForm(prev=> ({
       ...prev,
-      fromDate: date,
-    }));
-  };
+      [name]: date,
 
-  const handleDataChange2 = (date) => {
-    setProjectForm((prev) => ({
-      ...prev,
-      toDate: date,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,13 +71,13 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         <Col xs="auto">
           <DatePicker
             selected={projectForm.fromDate}
-            onChange={handleDataChange1}
+            onChange={(date) => handleDateChange(date, "fromDate")}
           />
         </Col>
         <Col xs="auto">
           <DatePicker
             selected={projectForm.toDate}
-            onChange={handleDataChange2}
+            onChange={(date) => handleDateChange(date, "toDate")}
           />
         </Col>
       </Form.Group>
